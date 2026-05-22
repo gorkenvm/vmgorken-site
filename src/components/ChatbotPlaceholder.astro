@@ -1,0 +1,257 @@
+---
+// Chatbot placeholder — sağ alt floating buton.
+// İçerik sonra kullanıcı tarafından doldurulacak. Şu an "yakında" mesajı veriyor.
+---
+
+<div class="chatbot-fab" id="chatbot-fab" role="button" tabindex="0" aria-label="AI eşliğinde sohbet et">
+  <button class="fab-btn" aria-haspopup="dialog" aria-controls="chatbot-window" id="fab-btn">
+    <svg
+      width="22"
+      height="22"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    >
+      <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
+    </svg>
+    <span class="fab-pulse" aria-hidden="true"></span>
+  </button>
+
+  <!-- Yakında mini panel -->
+  <div class="chatbot-window" id="chatbot-window" role="dialog" aria-labelledby="chatbot-title" aria-hidden="true">
+    <div class="cw-head">
+      <div>
+        <div class="cw-title" id="chatbot-title">AI Twin <span class="cw-badge">soon</span></div>
+        <div class="cw-subtitle">RAG destekli kişisel asistanım</div>
+      </div>
+      <button class="cw-close" aria-label="Kapat" id="cw-close">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+    </div>
+
+    <div class="cw-body">
+      <div class="cw-bubble cw-bubble--bot">
+        Merhaba — şu an inşa aşamasındayım. Yakında CV'm ve projelerim hakkında
+        sorularınıza buradan cevap vereceğim. Şimdilik
+        <a href="mailto:gorkenvm@gmail.com">e-posta</a> ya da
+        <a href="https://linkedin.com/in/vmgorken" target="_blank" rel="noopener">LinkedIn</a>
+        en hızlı yol.
+      </div>
+
+      <div class="cw-suggestions">
+        <button class="cw-chip" disabled>"Whisper LoRA detayını anlat"</button>
+        <button class="cw-chip" disabled>"Almanca seviyem nedir?"</button>
+        <button class="cw-chip" disabled>"En sevdiğin proje?"</button>
+      </div>
+    </div>
+
+    <div class="cw-foot">
+      <input type="text" placeholder="Sohbet henüz aktif değil…" disabled />
+      <button disabled aria-label="Gönder">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="22" y1="2" x2="11" y2="13"></line>
+          <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+        </svg>
+      </button>
+    </div>
+  </div>
+</div>
+
+<script>
+  const fab = document.getElementById("fab-btn");
+  const win = document.getElementById("chatbot-window");
+  const closeBtn = document.getElementById("cw-close");
+
+  fab?.addEventListener("click", () => {
+    const open = win?.classList.toggle("open");
+    win?.setAttribute("aria-hidden", open ? "false" : "true");
+  });
+
+  closeBtn?.addEventListener("click", () => {
+    win?.classList.remove("open");
+    win?.setAttribute("aria-hidden", "true");
+  });
+</script>
+
+<style>
+  .chatbot-fab {
+    position: fixed;
+    right: 28px;
+    bottom: 28px;
+    z-index: 100;
+  }
+
+  .fab-btn {
+    position: relative;
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: var(--accent);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 8px 24px rgba(91, 141, 246, 0.4);
+    transition: var(--transition);
+  }
+  .fab-btn:hover {
+    background: var(--accent-hover);
+    transform: scale(1.05);
+  }
+
+  .fab-pulse {
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    border: 2px solid var(--accent);
+    animation: ringPulse 2s ease-out infinite;
+    pointer-events: none;
+  }
+
+  @keyframes ringPulse {
+    0% { transform: scale(1); opacity: 0.7; }
+    100% { transform: scale(1.6); opacity: 0; }
+  }
+
+  .chatbot-window {
+    position: absolute;
+    right: 0;
+    bottom: 70px;
+    width: 340px;
+    max-width: calc(100vw - 56px);
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+    opacity: 0;
+    transform: translateY(10px) scale(0.96);
+    transform-origin: bottom right;
+    pointer-events: none;
+    transition: opacity 0.25s var(--ease), transform 0.25s var(--ease);
+    overflow: hidden;
+  }
+  .chatbot-window.open {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    pointer-events: auto;
+  }
+
+  .cw-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 16px 18px;
+    border-bottom: 1px solid var(--border);
+    background: var(--bg-2);
+  }
+
+  .cw-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 2px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .cw-badge {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    background: var(--accent-dim);
+    color: var(--accent);
+    padding: 2px 6px;
+    border-radius: 3px;
+  }
+
+  .cw-subtitle {
+    font-size: 11px;
+    color: var(--muted);
+  }
+
+  .cw-close {
+    color: var(--muted);
+    transition: color 0.2s;
+  }
+  .cw-close:hover { color: var(--text); }
+
+  .cw-body {
+    padding: 16px 18px;
+    max-height: 280px;
+    overflow-y: auto;
+  }
+
+  .cw-bubble {
+    background: var(--bg-2);
+    padding: 12px 14px;
+    border-radius: var(--radius-md);
+    font-size: 13px;
+    color: var(--text-soft);
+    line-height: 1.55;
+    margin-bottom: 14px;
+  }
+  .cw-bubble a {
+    color: var(--accent);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+
+  .cw-suggestions {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .cw-chip {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    padding: 6px 10px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    background: transparent;
+    color: var(--muted);
+    text-align: left;
+    cursor: not-allowed;
+    opacity: 0.6;
+  }
+
+  .cw-foot {
+    display: flex;
+    gap: 8px;
+    padding: 12px 14px;
+    border-top: 1px solid var(--border);
+    background: var(--bg-2);
+  }
+  .cw-foot input {
+    flex: 1;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 8px 10px;
+    color: var(--text);
+    font-family: inherit;
+    font-size: 12.5px;
+  }
+  .cw-foot input::placeholder { color: var(--muted-dim); }
+  .cw-foot button {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 8px 10px;
+    color: var(--muted);
+    cursor: not-allowed;
+  }
+
+  @media (max-width: 540px) {
+    .chatbot-fab { right: 16px; bottom: 16px; }
+    .chatbot-window { width: 300px; }
+  }
+</style>

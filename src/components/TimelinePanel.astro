@@ -1,0 +1,228 @@
+---
+import { timeline } from "../data/content";
+---
+
+<aside class="panel" id="timeline-panel" aria-label="Kariyer timeline">
+  <button
+    class="toggle-btn"
+    onclick="document.getElementById('timeline-panel').classList.toggle('open')"
+    aria-label="Timeline'ı aç/kapat"
+    title="Timeline aç / kapat"
+  >
+    <svg
+      width="18"
+      height="18"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    >
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </button>
+
+  <div class="panel-inner">
+    <div class="panel-title">Timeline</div>
+    <div class="timeline">
+      {
+        timeline.map((item) => (
+          <div class={`tl-item tl-${item.type}`}>
+            <div class="tl-date">{item.date}</div>
+            <div class="tl-role">{item.role}</div>
+            <div class="tl-org">{item.org}</div>
+            {item.highlights && (
+              <ul class="tl-highlights">
+                {item.highlights.map((h) => (
+                  <li>{h}</li>
+                ))}
+              </ul>
+            )}
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</aside>
+
+<style>
+  .panel {
+    position: sticky;
+    top: 0;
+    align-self: flex-start;
+    width: var(--toggle-w);
+    min-width: var(--toggle-w);
+    height: 100vh;
+    background: var(--surface);
+    border-right: 1px solid var(--border);
+    transition: width 0.4s var(--ease);
+    overflow: hidden;
+    flex-shrink: 0;
+    z-index: 5;
+  }
+
+  .panel.open {
+    width: var(--panel-w);
+  }
+
+  .toggle-btn {
+    position: absolute;
+    top: 24px;
+    right: 0;
+    width: var(--toggle-w);
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--accent);
+    z-index: 10;
+    transition: color 0.2s;
+  }
+  .toggle-btn:hover { color: #fff; }
+
+  .toggle-btn svg {
+    transition: transform 0.4s var(--ease);
+  }
+  .panel.open .toggle-btn svg { transform: rotate(180deg); }
+
+  .panel-inner {
+    width: var(--panel-w);
+    padding: 28px 24px 40px 24px;
+    height: 100%;
+    overflow-y: auto;
+    opacity: 0;
+    transition: opacity 0.2s 0.1s;
+  }
+  .panel.open .panel-inner { opacity: 1; }
+
+  .panel-inner::-webkit-scrollbar { width: 4px; }
+  .panel-inner::-webkit-scrollbar-track { background: transparent; }
+  .panel-inner::-webkit-scrollbar-thumb {
+    background: var(--border);
+    border-radius: 2px;
+  }
+
+  .panel-title {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 32px;
+    padding-left: 16px;
+  }
+
+  .timeline {
+    position: relative;
+    padding-left: 16px;
+  }
+  .timeline::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 6px;
+    bottom: 6px;
+    width: 1px;
+    background: var(--border);
+  }
+
+  .tl-item {
+    position: relative;
+    margin-bottom: 28px;
+  }
+  .tl-item::before {
+    content: "";
+    position: absolute;
+    left: -20px;
+    top: 6px;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--border);
+    border: 1.5px solid var(--border);
+    transition: background 0.2s, border-color 0.2s, box-shadow 0.2s;
+  }
+
+  .tl-item:hover::before,
+  .tl-item.tl-now::before {
+    background: var(--accent);
+    border-color: var(--accent);
+    box-shadow: 0 0 0 4px var(--accent-dim);
+  }
+
+  .tl-now::before {
+    animation: pulse 2.4s ease-in-out infinite;
+  }
+
+  .tl-date {
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    color: var(--accent);
+    margin-bottom: 4px;
+    letter-spacing: 0.04em;
+  }
+
+  .tl-role {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text);
+    margin-bottom: 3px;
+    line-height: 1.35;
+  }
+
+  .tl-org {
+    font-size: 12px;
+    color: var(--muted);
+    line-height: 1.5;
+  }
+
+  .tl-highlights {
+    list-style: none;
+    margin-top: 10px;
+    padding-left: 0;
+  }
+  .tl-highlights li {
+    font-size: 11.5px;
+    color: var(--text-soft);
+    line-height: 1.55;
+    padding-left: 12px;
+    position: relative;
+    margin-bottom: 5px;
+  }
+  .tl-highlights li::before {
+    content: "›";
+    position: absolute;
+    left: 0;
+    color: var(--accent);
+    opacity: 0.6;
+  }
+
+  @media (max-width: 860px) {
+    .panel {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      top: auto;
+      height: auto;
+      width: 100%;
+      min-width: 100%;
+      max-height: 50px;
+      border-right: none;
+      border-top: 1px solid var(--border);
+      transition: max-height 0.4s var(--ease);
+    }
+    .panel.open { max-height: 70vh; }
+    .toggle-btn {
+      top: 6px;
+      right: 50%;
+      transform: translateX(50%);
+    }
+    .panel.open .toggle-btn svg { transform: rotate(-90deg); }
+    .toggle-btn svg { transform: rotate(90deg); }
+    .panel-inner {
+      width: 100%;
+      padding-top: 50px;
+    }
+  }
+</style>

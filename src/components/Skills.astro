@@ -1,0 +1,148 @@
+---
+import { skillGroups, languages } from "../data/content";
+---
+
+<section class="section skills-section" id="skills">
+  <div class="section-inner">
+    <div class="reveal">
+      <div class="section-eyebrow">Yetkinlikler</div>
+      <h2 class="section-title">Üretim AI yığınının her katmanı</h2>
+      <p class="section-lead">
+        Model geliştirmeden veri mühendisliğine, MLOps'tan paydaş raporlamasına
+        kadar tek elden. Etiket bulutu yerine — gerçekten kullandığım araçlar.
+      </p>
+    </div>
+
+    <div class="skills-grid">
+      {
+        skillGroups.map((g, i) => (
+          <div
+            class="skill-card reveal"
+            style={`transition-delay: ${i * 60}ms;`}
+          >
+            <h3 class="skill-title">{g.title}</h3>
+            <div class="skill-items">
+              {g.items.map((it) => (
+                <span class="chip">{it}</span>
+              ))}
+            </div>
+          </div>
+        ))
+      }
+    </div>
+
+    <!-- Dil yetkinlikleri -->
+    <div class="lang-block reveal">
+      <h3 class="lang-title">Diller</h3>
+      <div class="lang-list">
+        {
+          languages.map((l) => (
+            <div class="lang-item">
+              <div class="lang-row">
+                <span class="lang-name">{l.name}</span>
+                <span class="lang-level">{l.level}</span>
+              </div>
+              <div class="lang-bar">
+                <div class="lang-bar-fill" style={`width: ${l.percent}%`}></div>
+              </div>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 18px;
+    margin-bottom: 60px;
+  }
+
+  .skill-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: 24px 22px;
+    transition: border-color 0.3s var(--ease);
+  }
+  .skill-card:hover { border-color: var(--border-strong); }
+
+  .skill-title {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 16px;
+  }
+
+  .skill-items {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .skill-items .chip {
+    font-size: 11px;
+    padding: 4px 10px;
+  }
+
+  /* Dil bloğu */
+  .lang-block {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: 28px 26px;
+  }
+
+  .lang-title {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 22px;
+  }
+
+  .lang-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 22px;
+  }
+
+  .lang-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 8px;
+  }
+
+  .lang-name {
+    font-size: 14px;
+    color: var(--text);
+    font-weight: 500;
+  }
+
+  .lang-level {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--muted);
+  }
+
+  .lang-bar {
+    height: 4px;
+    background: var(--bg-2);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+
+  .lang-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--accent), var(--purple));
+    border-radius: 2px;
+    transition: width 1.2s var(--ease) 0.3s;
+  }
+</style>

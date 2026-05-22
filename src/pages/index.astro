@@ -1,0 +1,26 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import TimelinePanel from "../components/TimelinePanel.astro";
+import Hero from "../components/Hero.astro";
+import ImpactMetrics from "../components/ImpactMetrics.astro";
+import FeaturedProjects from "../components/FeaturedProjects.astro";
+import Skills from "../components/Skills.astro";
+import Contact from "../components/Contact.astro";
+import ChatbotPlaceholder from "../components/ChatbotPlaceholder.astro";
+---
+
+<BaseLayout>
+  <div class="layout">
+    <TimelinePanel />
+
+    <main class="content">
+      <Hero />
+      <ImpactMetrics />
+      <FeaturedProjects />
+      <Skills />
+      <Contact />
+    </main>
+  </div>
+
+  <ChatbotPlaceholder />
+</BaseLayout>
