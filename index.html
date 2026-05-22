@@ -54,26 +54,72 @@
       width: var(--panel-w);
     }
 
+    /* Collapsed: gözle görülür "TIMELINE" etiketi */
+    .panel-tab {
+      position: absolute;
+      top: 50%;
+      left: 0;
+      width: var(--toggle-w);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      transform: translateY(-50%);
+      pointer-events: none;
+      opacity: 1;
+      transition: opacity 0.2s;
+    }
+    .panel.open .panel-tab { opacity: 0; }
+
+    .panel-tab-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 9px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      writing-mode: vertical-rl;
+      text-orientation: mixed;
+      transform: rotate(180deg);
+    }
+
+    .panel-tab-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--accent);
+      animation: pulseDot 2.2s ease-in-out infinite;
+    }
+
+    @keyframes pulseDot {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.4; transform: scale(0.7); }
+    }
+
     .toggle-btn {
       position: absolute;
-      top: 28px;
+      top: 0;
       right: 0;
       width: var(--toggle-w);
-      height: 48px;
+      height: 100%;
       display: flex;
-      align-items: center;
+      align-items: flex-start;
       justify-content: center;
+      padding-top: 20px;
       cursor: pointer;
       color: var(--accent);
       background: none;
       border: none;
       z-index: 10;
-      transition: color 0.2s;
+      transition: color 0.2s, background 0.2s;
     }
-    .toggle-btn:hover { color: #fff; }
+    .toggle-btn:hover {
+      color: #fff;
+      background: rgba(91,141,246,0.06);
+    }
 
     .toggle-btn svg {
       transition: transform 0.35s cubic-bezier(0.4,0,0.2,1);
+      flex-shrink: 0;
     }
     .panel.open .toggle-btn svg {
       transform: rotate(180deg);
@@ -312,6 +358,117 @@
       margin-bottom: 28px;
       display: block;
     }
+
+    /* ── MOBILE ─────────────────────────────── */
+    @media (max-width: 768px) {
+      html, body { overflow: auto; height: auto; }
+
+      .layout { flex-direction: column; height: auto; min-height: 100svh; }
+
+      .hero {
+        flex: none;
+        min-height: 100svh;
+        padding: 48px 24px 120px;
+        align-items: flex-start;
+        justify-content: flex-start;
+      }
+
+      .hero-content { max-width: 100%; }
+
+      .hero-name { font-size: clamp(32px, 9vw, 48px); }
+
+      .hero-bio { font-size: 14px; }
+
+      .hero-links {
+        flex-wrap: wrap;
+        gap: 10px;
+      }
+
+      .link-btn { font-size: 13px; padding: 10px 18px; }
+
+      .hero-chips { gap: 6px; }
+
+      .chip { font-size: 10px; padding: 4px 10px; }
+
+      /* Panel → bottom drawer on mobile */
+      .panel {
+        position: fixed !important;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        width: 100% !important;
+        min-width: 100% !important;
+        height: auto !important;
+        max-height: 52px;
+        border-right: none;
+        border-top: 1px solid var(--border);
+        z-index: 100;
+        overflow: hidden;
+        transition: max-height 0.35s cubic-bezier(0.4,0,0.2,1);
+      }
+
+      .panel.open {
+        max-height: 65vh;
+        width: 100% !important;
+      }
+
+      .panel-tab { display: none; }
+
+      .toggle-btn {
+        position: static !important;
+        width: 100%;
+        height: 52px;
+        padding-top: 0;
+        justify-content: center;
+        gap: 8px;
+      }
+
+      /* Chevron points up (to open), rotates down when open */
+      .toggle-btn svg { transform: rotate(-90deg) !important; }
+      .panel.open .toggle-btn svg { transform: rotate(90deg) !important; }
+
+      /* Mobile toggle label */
+      .toggle-btn::before {
+        content: 'TIMELINE';
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 9px;
+        letter-spacing: 0.18em;
+        color: var(--accent);
+      }
+
+      .panel-inner {
+        width: 100%;
+        height: auto;
+        max-height: calc(65vh - 52px);
+        padding: 8px 24px 40px;
+        opacity: 1 !important;
+        overflow-y: auto;
+      }
+
+      /* Horizontal scroll for timeline on small screens */
+      .timeline {
+        display: flex;
+        flex-direction: row;
+        gap: 24px;
+        overflow-x: auto;
+        padding-bottom: 8px;
+        padding-left: 0;
+      }
+
+      .timeline::before { display: none; }
+
+      .tl-item {
+        min-width: 160px;
+        margin-bottom: 0;
+        padding: 12px 14px;
+        background: var(--bg);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        flex-shrink: 0;
+      }
+
+      .tl-item::before { display: none; }
+    }
   </style>
 </head>
 <body>
@@ -320,8 +477,14 @@
 
   <!-- TIMELINE PANEL -->
   <div class="panel" id="panel">
-    <button class="toggle-btn" onclick="togglePanel()" title="Toggle timeline">
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <!-- Collapsed indicator: TIMELINE label + pulsing dot -->
+    <div class="panel-tab" aria-hidden="true">
+      <div class="panel-tab-dot"></div>
+      <div class="panel-tab-label">Timeline</div>
+    </div>
+
+    <button class="toggle-btn" onclick="togglePanel()" title="Timeline'ı aç / kapat">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
         <polyline points="9 18 15 12 9 6"></polyline>
       </svg>
     </button>
