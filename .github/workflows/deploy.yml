@@ -6,19 +6,35 @@ on:
       - main
 
 jobs:
-  deploy:
+  build-and-deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: Deploy via SSH
+      - name: Kodu al
+        uses: actions/checkout@v4
+
+      - name: Node.js 20 kur
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Build al (GitHub Actions üzerinde)
+        run: npm ci && npm run build
+
+      - name: VPS kaynak kodunu güncelle
         uses: appleboy/ssh-action@v1.0.3
         with:
           host: ${{ secrets.VPS_HOST }}
           username: vmg
           key: ${{ secrets.VPS_SSH_KEY }}
-          script: |
-            export NVM_DIR="$HOME/.nvm"
-            [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
-            cd /home/vmg/www/vmgorken-site
-            git pull origin main
-            npm install --production=false
-            npm run build
+          script: cd /home/vmg/www/vmgorken-site && git pull origin main
+
+      - name: dist/ klasörünü VPS'e kopyala
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ secrets.VPS_HOST }}
+          username: vmg
+          key: ${{ secrets.VPS_SSH_KEY }}
+          source: "dist"
+          target: "/home/vmg/www/vmgorken-site/"
+          rm: true
