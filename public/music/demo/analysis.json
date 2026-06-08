@@ -1,0 +1,238 @@
+{
+  "meta": {
+    "title": "99 Luftballons",
+    "artist": "Nena",
+    "year": 1983,
+    "language": "de"
+  },
+  "lines": [
+    {
+      "time": 11.5,
+      "words": [
+        {
+          "text": "Hast",
+          "tr": "Sahip misin",
+          "de_meaning": "haben fiilinin 2. tekil şahıs soru çekimi",
+          "context": "'Hast du' kalıbı Almancada en yaygın soru başlangıçlarından biridir: 'Var mı sende...'"
+        },
+        {
+          "text": "du",
+          "tr": "sen",
+          "de_meaning": "2. tekil şahıs kişi zamiri",
+          "context": "Konuşmacının doğrudan muhatap aldığı kişiyi işaret eder."
+        },
+        {
+          "text": "etwas",
+          "tr": "bir şey / biraz",
+          "de_meaning": "belirsiz zamir; herhangi bir şey, bir miktar",
+          "context": "Soru bağlamında 'bir şeyin var mı' anlamını güçlendirir."
+        },
+        {
+          "text": "Zeit",
+          "tr": "zaman / vakit",
+          "de_meaning": "isim (dişil): die Zeit — süre, vakit, zaman",
+          "context": "'Hast du Zeit?' = 'Vaktin var mı?' Almancada günlük bir kalıptır."
+        },
+        {
+          "text": "für",
+          "tr": "için",
+          "de_meaning": "edat; bir amaç veya alıcıyı işaret eder",
+          "context": "'Für mich' = 'benim için'. Akkuzatif (belirtme) hali gerektiren bir edattır."
+        },
+        {
+          "text": "mich",
+          "tr": "beni / benim için",
+          "de_meaning": "1. tekil şahıs zamirinin akkuzatif (belirtme) hali",
+          "context": "'Ich' zamirinin -i durumu. 'für' edatından sonra gelmesi zorunludur."
+        }
+      ],
+      "line_translation": "Benim için biraz vaktin var mı?",
+      "line_analysis": "Şarkı, dinleyiciyi doğrudan muhatap alan masum bir soruyla açılır. Bu açılış, şarkı boyunca sürecek çocuksu bakış açısının ve oyun gibi bir dünyanın kapısını aralar. 'Hast du Zeit für mich' kalıbı aynı zamanda günlük Almancada çok kullanılan bir nazik davet ifadesidir — şarkı bu sıradan kalıbı derin bir anlam taşıyıcısına dönüştürür."
+    },
+    {
+      "time": 14.8,
+      "words": [
+        {
+          "text": "Dann",
+          "tr": "O zaman / Öyleyse",
+          "de_meaning": "zaman veya koşul zarfı; bir önceki cümleye bağlar",
+          "context": "'Wenn... dann' yapısının ikinci parçası gibi çalışır: 'eğer varsa... o zaman'"
+        },
+        {
+          "text": "singe",
+          "tr": "söylerim",
+          "de_meaning": "singen fiilinin 1. tekil şahıs geniş/şimdiki zaman çekimi",
+          "context": "'Singen' = şarkı söylemek. 'Ich singe' = ben söylerim/söylüyorum."
+        },
+        {
+          "text": "ich",
+          "tr": "ben",
+          "de_meaning": "1. tekil şahıs kişi zamiri",
+          "context": "Almancada fiil çekiminde zaten şahıs belirtilse de zamir genellikle eklenir."
+        },
+        {
+          "text": "ein",
+          "tr": "bir",
+          "de_meaning": "belirsiz tanımlık; tekil, nötr/eril isimler önünde (akkuzatif: ein)",
+          "context": "'Ein Lied' = 'bir şarkı'. 'Lied' nötr (das Lied) olduğundan 'ein' kullanılır."
+        },
+        {
+          "text": "Lied",
+          "tr": "şarkı",
+          "de_meaning": "isim (nötr): das Lied — şarkı, türkü, ezgi",
+          "context": "Almancada 'Lied' kelimesi genellikle duygusal veya lirik şarkılar için kullanılır. Popüler müzikte 'Song' da kullanılır ama 'Lied' daha köklü ve sanatsal bir çağrışım taşır."
+        },
+        {
+          "text": "für",
+          "tr": "için",
+          "de_meaning": "edat; alıcıyı veya amacı belirtir",
+          "context": "Akkuzatif (belirtme) hali gerektirir. 'für dich' = 'senin için'."
+        },
+        {
+          "text": "dich",
+          "tr": "seni / senin için",
+          "de_meaning": "2. tekil şahıs zamirinin akkuzatif (belirtme) hali",
+          "context": "'du' zamirinin -i durumu. 'für dich' = 'senin için' — şarkıcının muhatabına adanmış bir jest."
+        }
+      ],
+      "line_translation": "O zaman senin için bir şarkı söylerim",
+      "line_analysis": "Birinci satırın nazik sorusuna verilen karşılık. Şarkıcı, muhataba doğrudan bir şarkı söz veriyor. Bu, şarkının meta-anlatısıdır: 'bu şarkı senin için' demek, dinleyiciyi hem hikayenin içine hem de bu trajik olayın tanığı konumuna çeker. Sanatsal bir davet."
+    },
+    {
+      "time": 18.1,
+      "words": [
+        {
+          "text": "Von",
+          "tr": "hakkında / üzerine",
+          "de_meaning": "edat; konu, başlangıç noktası veya aitlik belirtir",
+          "context": "'Von etw. singen' = 'bir şey hakkında şarkı söylemek'. Datif (ismin -e durumu) gerektirir."
+        },
+        {
+          "text": "neunundneunzig",
+          "tr": "doksan dokuz",
+          "de_meaning": "sayı sıfatı: 99",
+          "context": "Almancada bileşik sayılar tek sözcük yazılır: neun (9) + und (ve) + neunzig (90). Türkçe tersine, Almancada küçük basamak önce gelir: 'dokuz-ve-doksan'."
+        },
+        {
+          "text": "Luftballons",
+          "tr": "hava balonları",
+          "de_meaning": "Luftballon (tekil) çoğulu; Luft (hava) + Ballon (balon) = uçan renkli lastik balon",
+          "context": "Şarkının sembolik kalbi. Masum bir çocukluk nesnesi olan balonlar, kıta genelinde askeri paniğe yol açar. Bu ironi şarkının tüm mesajını taşır: en masum şeyler bile yanlış ellerde felakete dönüşebilir."
+        }
+      ],
+      "line_translation": "Doksan dokuz hava balonundan",
+      "line_analysis": "Şarkının en ikonik dizisi ve temel sembolü burada ortaya çıkar. '99 Luftballons' — sıradan, rengarenk, çocukların elinden kaçıvermiş balonlar. Soğuk Savaş döneminin Almanyası'nda (1983) yazılan bu şarkı, bu balonların nasıl radar ekranlarında bilinmeyen nesne olarak göründüğünü ve iki süper gücü neredeyse nükleer savaşa sürüklediğini anlatır. Sayının '99' olması sembolik: tam yuvarlak değil, eksik — bir kırılganlık ve tesadüf hissi verir."
+    },
+    {
+      "time": 21.4,
+      "words": [
+        {
+          "text": "Auf",
+          "tr": "üzerinde / boyunca",
+          "de_meaning": "edat; yüzey, konum veya yön belirtir. Datif veya akkuzatif alabilir",
+          "context": "'Auf ihrem Weg' datif hal. Balonların gökyüzündeki konumunu ve hareketini anlatır."
+        },
+        {
+          "text": "ihrem",
+          "tr": "onların",
+          "de_meaning": "3. çoğul şahıs iyelik sıfatının datif eril/nötr çekimi: ihr- + -em",
+          "context": "Balonları 'onlar' olarak kişileştirir. 'Auf ihrem Weg' = 'onların yolculuğunda/yollarında'."
+        },
+        {
+          "text": "Weg",
+          "tr": "yol / yolculuk",
+          "de_meaning": "isim (eril): der Weg — patika, güzergah, yolculuk, gidişat",
+          "context": "Balonların sürüklenişini anlatırken metaforik bir yol imgesi yaratır. Hem fiziksel hem sembolik: balonların 'yolu' aynı zamanda şarkının anlattığı felakete giden yoldur."
+        },
+        {
+          "text": "zum",
+          "tr": "...ya doğru",
+          "de_meaning": "zu + dem (datif birleşimi): zu = ...a/e, -a doğru; dem = tekil eril/nötr tanımlık",
+          "context": "'Zum Horizont' = 'ufka doğru'. Yön belirtir. Almancada çok sık karşılaşılan bir kalıptır."
+        },
+        {
+          "text": "Horizont",
+          "tr": "ufuk / ufuk çizgisi",
+          "de_meaning": "isim (eril): der Horizont — ufuk, gökyüzünün yer ile buluştuğu çizgi",
+          "context": "Balonların gittiği yön. Metaforik olarak 'bilinmezliğe doğru'. Ufuk hem özgürlüğü hem de tehlikeyi simgeler — balonlar radarların görüş sınırına yaklaşmaktadır."
+        }
+      ],
+      "line_translation": "Ufka doğru yolculukları boyunca",
+      "line_analysis": "Bu dize, balonların pasif ama kaçınılmaz hareketini tasvir eder. Kimse onları yönlendirmiyor; rüzgarın önünde gidiyorlar. Bu pasiflik trajiktir: masum balonlar, bilinçsizce insanlığı savaşa sürükleyen zincirin ilk halkasını oluşturur. 'Horizont' metaforu da güçlüdür — ufuk hem özgürlüğü hem de görünmezliği, hem umudu hem de tehlikeyi barındırır."
+    },
+    {
+      "time": 24.7,
+      "words": [
+        {
+          "text": "Hielt",
+          "tr": "tuttu / durdu",
+          "de_meaning": "halten fiilinin geçmiş zaman (Präteritum) çekimi: halten → hielt",
+          "context": "'halten' = tutmak, durmak. Geçmiş zaman anlatı kipi: Almanca yazılı dilde ve hikaye anlatımında kullanılır."
+        },
+        {
+          "text": "manch",
+          "tr": "kimi / bazı",
+          "de_meaning": "belirsiz sıfat; 'bazı, kimi' anlamında",
+          "context": "'Manch ein General' = 'kimi general, bazı generaller'. Belirsizlik ve yaygınlık hissi verir — tek bir kişi değil, sistematik bir tepki."
+        },
+        {
+          "text": "ein",
+          "tr": "bir",
+          "de_meaning": "belirsiz tanımlık; eril tekil (nominatif: ein)",
+          "context": "'Manch ein' birlikte kullanılır. 'General' eril (der General) olduğundan 'ein' gelir."
+        },
+        {
+          "text": "General",
+          "tr": "general / ordu komutanı",
+          "de_meaning": "isim (eril): der General — yüksek rütbeli askeri komutan",
+          "context": "Şarkıdaki generaller balonları savaş aracı ya da tehdit olarak yorumlar. Bu, savaş makinasının nasıl masumiyet karşısında körleşebileceğini simgeler."
+        }
+      ],
+      "line_translation": "Kimi general duraksadı",
+      "line_analysis": "Şarkının tonunu değiştiren kritik dize. Masum balonların hikayesi burada askeri-politik bir boyut kazanır. General figürü, savaş makinesini temsil eder: küçük, anlamsız bir şeyi büyük tehdit olarak yorumlayan sistematik paranoya. 'Manch' ifadesi bunu bir bireyin hatası değil, kolektif bir korku refleksi olarak çerçeveler."
+    },
+    {
+      "time": 28.0,
+      "words": [
+        {
+          "text": "Und",
+          "tr": "Ve",
+          "de_meaning": "bağlaç; iki unsuru birbirine bağlar",
+          "context": "Önceki dizeyle mantıksal bir zincirleme kurar: general duraksadı VE..."
+        },
+        {
+          "text": "hielt",
+          "tr": "tuttu / duraksadı",
+          "de_meaning": "halten fiilinin geçmiş zaman çekimi",
+          "context": "Birinci dizedeki 'hielt' ile paralel yapı: ritim ve anlam açısından şiirsel bir yineleme."
+        },
+        {
+          "text": "ihn",
+          "tr": "onu",
+          "de_meaning": "3. tekil eril şahıs zamirinin akkuzatif (belirtme) hali",
+          "context": "'Ihn' burada generali değil, durumu veya süreci işaret ediyor olabilir — veya başka bir generali ya da bir subayı."
+        },
+        {
+          "text": "für",
+          "tr": "olarak / diye",
+          "de_meaning": "edat; 'saymak, zannetmek' anlamındaki fiillerle 'olarak' anlamı kazanır",
+          "context": "'Halten für' = 'olarak değerlendirmek, zannetmek'. 'Hielt ihn für' = 'onu ... saydı/zannetti'."
+        },
+        {
+          "text": "ein",
+          "tr": "bir",
+          "de_meaning": "belirsiz tanımlık; nötr tekil (akkuzatif: ein)",
+          "context": "'UFO' nötr (das UFO) olduğu için 'ein' kullanılır. Tanımsız, bilinmeyen bir şey."
+        },
+        {
+          "text": "UFO",
+          "tr": "UFO / UGN (Uzaylı Gözlemleme Nesnesi)",
+          "de_meaning": "Ufo: Unbekanntes Flugobjekt — kimliği bilinmeyen uçan nesne",
+          "context": "Şarkının en absürd ve güçlü ironisi: 99 renkli balon, askeri radar ekranında UFO olarak görünür. Bu, şarkının tüm mesajını özetler: paranoya, masum şeyleri tehdit olarak görür."
+        }
+      ],
+      "line_translation": "Ve onu bir UFO sandı",
+      "line_analysis": "Şarkının kalbindeki absürd ironi burada zirveye ulaşır. Çocuklara ait 99 renkli balon, en modern askeri teknoloji tarafından uzaylı saldırısı olarak yorumlanır. Bu sahne hem komik hem trajik: insan zihni ve savaş makinesi, tehdit algısıyla öylesine koşullanmıştır ki gerçeği göremez hale gelir. Bu, Soğuk Savaş'ın yanlış hesaplamalara dayalı nükleer tehlikesinin mükemmel bir alegorisidir."
+    }
+  ]
+}

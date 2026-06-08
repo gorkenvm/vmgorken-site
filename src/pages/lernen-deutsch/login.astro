@@ -1,0 +1,246 @@
+---
+const ldHash = import.meta.env.PUBLIC_LD_HASH ?? '';
+const devMode = !ldHash;
+---
+
+<!doctype html>
+<html lang="tr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="color-scheme" content="dark" />
+    <meta name="theme-color" content="#0c0c0f" />
+    <title>Giriş — Lernen Deutsch</title>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <!-- Zaten giriş yapılmışsa doğrudan yönlendir -->
+    <script is:inline>
+      if (sessionStorage.getItem('ld_auth') === '1') {
+        window.location.replace('/lernen-deutsch');
+      }
+    </script>
+
+    <div class="wrap">
+      <div class="card">
+        <div class="logo">♪</div>
+        <h1 class="title">Lernen Deutsch</h1>
+        <p class="subtitle">Müzikle Almanca öğren</p>
+
+        {devMode && (
+          <div class="dev-notice">
+            Geliştirici modu: <code>.env</code> içinde <code>PUBLIC_LD_HASH</code> tanımlanmamış.
+            Herhangi bir parola kabul edilir.
+          </div>
+        )}
+
+        <form id="login-form" autocomplete="off">
+          <div class="input-wrap">
+            <input
+              type="password"
+              id="password"
+              placeholder="Parola"
+              autocomplete="current-password"
+              autofocus
+            />
+          </div>
+          <p id="error-msg" class="error" hidden>Hatalı parola. Tekrar dene.</p>
+          <button type="submit" class="btn-submit">
+            Giriş
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+              <polyline points="12 5 19 12 12 19"></polyline>
+            </svg>
+          </button>
+        </form>
+
+        <a href="/" class="back-link">← Ana sayfaya dön</a>
+      </div>
+    </div>
+
+    <style>
+      *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+      html, body {
+        height: 100%;
+        background: #0c0c0f;
+        color: #ededf0;
+        font-family: "Inter", system-ui, sans-serif;
+        -webkit-font-smoothing: antialiased;
+      }
+
+      .wrap {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 24px;
+        background:
+          radial-gradient(ellipse 60% 50% at 50% 40%, rgba(91,141,246,0.08) 0%, transparent 70%);
+      }
+
+      .card {
+        width: 100%;
+        max-width: 380px;
+        background: #13131a;
+        border: 1px solid #22222e;
+        border-radius: 16px;
+        padding: 48px 40px;
+        text-align: center;
+      }
+
+      .logo {
+        font-size: 36px;
+        margin-bottom: 20px;
+        display: block;
+        filter: drop-shadow(0 0 20px rgba(91,141,246,0.4));
+      }
+
+      .title {
+        font-size: 22px;
+        font-weight: 600;
+        letter-spacing: -0.02em;
+        margin-bottom: 8px;
+      }
+
+      .subtitle {
+        font-size: 13px;
+        color: #9090aa;
+        margin-bottom: 36px;
+      }
+
+      .dev-notice {
+        font-size: 11px;
+        color: #f5c451;
+        background: rgba(245, 196, 81, 0.08);
+        border: 1px solid rgba(245, 196, 81, 0.2);
+        border-radius: 6px;
+        padding: 10px 14px;
+        margin-bottom: 24px;
+        text-align: left;
+        line-height: 1.6;
+      }
+
+      .dev-notice code {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 10px;
+        background: rgba(245, 196, 81, 0.15);
+        padding: 1px 5px;
+        border-radius: 3px;
+      }
+
+      .input-wrap {
+        margin-bottom: 12px;
+      }
+
+      input[type="password"] {
+        width: 100%;
+        background: #0f0f15;
+        border: 1px solid #22222e;
+        border-radius: 8px;
+        color: #ededf0;
+        font-family: "Inter", sans-serif;
+        font-size: 14px;
+        padding: 13px 16px;
+        outline: none;
+        transition: border-color 0.2s;
+      }
+      input[type="password"]:focus { border-color: #5b8df6; }
+      input[type="password"]::placeholder { color: #505065; }
+
+      .error {
+        font-size: 12px;
+        color: #f59560;
+        margin-bottom: 12px;
+        text-align: left;
+      }
+
+      .btn-submit {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        background: #5b8df6;
+        color: #fff;
+        border: none;
+        border-radius: 8px;
+        font-family: "Inter", sans-serif;
+        font-size: 14px;
+        font-weight: 500;
+        padding: 13px 24px;
+        cursor: pointer;
+        transition: background 0.2s, transform 0.15s;
+        margin-bottom: 20px;
+      }
+      .btn-submit:hover {
+        background: #7aaaf8;
+        transform: translateY(-1px);
+      }
+      .btn-submit:active { transform: translateY(0); }
+
+      .back-link {
+        font-size: 12px;
+        color: #707088;
+        text-decoration: none;
+        transition: color 0.2s;
+      }
+      .back-link:hover { color: #9090aa; }
+    </style>
+
+    <script define:vars={{ ldHash, devMode }}>
+      const form = document.getElementById('login-form');
+      const errorMsg = document.getElementById('error-msg');
+      const passInput = document.getElementById('password');
+
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const pass = passInput.value.trim();
+        if (!pass) return;
+
+        if (devMode || !ldHash) {
+          sessionStorage.setItem('ld_auth', '1');
+          window.location.replace('/lernen-deutsch');
+          return;
+        }
+
+        const encoder = new TextEncoder();
+        const data = encoder.encode(pass);
+        const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+        const hashHex = Array.from(new Uint8Array(hashBuffer))
+          .map((b) => b.toString(16).padStart(2, '0'))
+          .join('');
+
+        if (hashHex === ldHash) {
+          sessionStorage.setItem('ld_auth', '1');
+          window.location.replace('/lernen-deutsch');
+        } else {
+          errorMsg.hidden = false;
+          passInput.value = '';
+          passInput.focus();
+          passInput.animate(
+            [
+              { transform: 'translateX(0)' },
+              { transform: 'translateX(-5px)' },
+              { transform: 'translateX(5px)' },
+              { transform: 'translateX(-5px)' },
+              { transform: 'translateX(5px)' },
+              { transform: 'translateX(0)' },
+            ],
+            { duration: 400, easing: 'ease-out' }
+          );
+        }
+      });
+
+      passInput.addEventListener('input', () => {
+        errorMsg.hidden = true;
+      });
+    </script>
+  </body>
+</html>

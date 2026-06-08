@@ -1,0 +1,1175 @@
+---
+import { songs } from '../data/songs';
+const songsJSON = JSON.stringify(songs);
+---
+
+<!doctype html>
+<html lang="tr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="color-scheme" content="dark" />
+    <meta name="theme-color" content="#0c0c0f" />
+    <title>Lernen Deutsch — Müzikle Almanca Öğren</title>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+
+  <body>
+    <!-- Auth guard — hemen çalışır, içerik render edilmeden önce yönlendirir -->
+    <script is:inline>
+      if (sessionStorage.getItem('ld_auth') !== '1') {
+        window.location.replace('/lernen-deutsch/login');
+      }
+    </script>
+
+    <!-- Şarkı verisi — build zamanında baked-in -->
+    <script id="songs-data" type="application/json" set:html={songsJSON}></script>
+
+    <div id="app">
+
+      <!-- ───── HEADER ───── -->
+      <header id="ld-header">
+        <a href="/" id="back-btn">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="19" y1="12" x2="5" y2="12"></line>
+            <polyline points="12 5 5 12 12 19"></polyline>
+          </svg>
+          Ana Sayfa
+        </a>
+
+        <div id="header-brand">
+          <span class="brand-note">♪</span>
+          <span class="brand-text">LERNEN DEUTSCH</span>
+        </div>
+
+        <button id="logout-btn" title="Oturumu kapat">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+            <polyline points="16 17 21 12 16 7"></polyline>
+            <line x1="21" y1="12" x2="9" y2="12"></line>
+          </svg>
+          Çıkış
+        </button>
+      </header>
+
+      <!-- ───── MAIN 3-SÜTUN ───── -->
+      <div id="ld-main">
+
+        <!-- SOL: Kütüphane -->
+        <aside id="library">
+          <div class="panel-header-label">Kütüphane</div>
+          <ul id="song-list"></ul>
+        </aside>
+
+        <!-- MERKEZ: Lirik Ekranı -->
+        <main id="lyrics-area">
+          <div id="lyrics-scroll">
+            <div id="lyrics-empty-state">
+              <div class="empty-note">♪</div>
+              <p>Dinlemek istediğin<br />bir şarkıyı seç</p>
+            </div>
+            <div id="lyrics-lines" hidden></div>
+          </div>
+        </main>
+
+        <!-- SAĞ: Analiz Paneli -->
+        <aside id="analysis-panel">
+          <div class="panel-header-label">Analiz</div>
+          <div id="analysis-empty-state">
+            <svg class="panel-hint-icon" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="11" cy="11" r="8"></circle>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+            <p>Bir kelimeye tıkla<br />ya da satırı incele</p>
+          </div>
+          <div id="analysis-content" hidden></div>
+        </aside>
+
+      </div><!-- /#ld-main -->
+
+      <!-- ───── OYNATICI ÇUBUĞU ───── -->
+      <div id="player-bar">
+        <audio id="audio-player" preload="metadata"></audio>
+
+        <!-- Şu an çalan -->
+        <div id="now-playing">
+          <div id="cover-wrap">
+            <img id="cover-img" src="" alt="" width="44" height="44" />
+            <div id="cover-placeholder">♪</div>
+          </div>
+          <div id="track-info">
+            <span id="track-title">—</span>
+            <span id="track-artist">Şarkı seçilmedi</span>
+          </div>
+        </div>
+
+        <!-- Kontroller -->
+        <div id="controls-center">
+          <div id="ctrl-buttons">
+            <button id="btn-prev" class="ctrl-btn" title="Önceki (←)">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M6 6h2v12H6zm3.5 6 8.5 6V6z"/>
+              </svg>
+            </button>
+            <button id="btn-play" class="ctrl-btn ctrl-main" title="Oynat / Durdur (Boşluk)">
+              <svg id="icon-play" width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M8 5v14l11-7z"/>
+              </svg>
+              <svg id="icon-pause" width="22" height="22" viewBox="0 0 24 24" fill="currentColor" hidden>
+                <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>
+              </svg>
+            </button>
+            <button id="btn-next" class="ctrl-btn" title="Sonraki (→)">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M6 18l8.5-6L6 6v12zm2-8.14 5.43 3.86L8 13.86V9.86zM16 6h2v12h-2z"/>
+              </svg>
+            </button>
+          </div>
+          <div id="progress-row">
+            <span id="time-current">0:00</span>
+            <div id="progress-track" role="slider" aria-label="İlerleme çubuğu">
+              <div id="progress-fill"></div>
+            </div>
+            <span id="time-total">0:00</span>
+          </div>
+        </div>
+
+        <!-- Ses -->
+        <div id="volume-ctrl">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+            <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+          </svg>
+          <input type="range" id="volume-slider" min="0" max="1" step="0.05" value="0.8" />
+        </div>
+
+      </div><!-- /#player-bar -->
+
+    </div><!-- /#app -->
+
+    <!-- ───── STİLLER ───── -->
+    <style is:global>
+      *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+      :root {
+        --bg: #0c0c0f;
+        --bg-2: #0f0f15;
+        --surface: #13131a;
+        --surface-2: #1a1a23;
+        --border: #22222e;
+        --border-strong: #2c2c3a;
+        --text: #ededf0;
+        --text-soft: #9090aa;
+        --muted: #707088;
+        --muted-dim: #505065;
+        --accent: #5b8df6;
+        --accent-hover: #7aaaf8;
+        --accent-dim: rgba(91, 141, 246, 0.12);
+        --accent-glow: rgba(91, 141, 246, 0.35);
+        --green: #61d889;
+        --font-sans: "Inter", system-ui, sans-serif;
+        --font-mono: "JetBrains Mono", ui-monospace, monospace;
+        --ease: cubic-bezier(0.4, 0, 0.2, 1);
+        --header-h: 50px;
+        --player-h: 80px;
+      }
+
+      html, body {
+        height: 100%;
+        overflow: hidden;
+        background: var(--bg);
+        color: var(--text);
+        font-family: var(--font-sans);
+        font-size: 14px;
+        line-height: 1.6;
+        -webkit-font-smoothing: antialiased;
+      }
+
+      a { color: inherit; text-decoration: none; }
+      button { font-family: inherit; cursor: pointer; border: none; background: none; color: inherit; }
+
+      /* ── Scrollbar ── */
+      ::-webkit-scrollbar { width: 6px; }
+      ::-webkit-scrollbar-track { background: transparent; }
+      ::-webkit-scrollbar-thumb { background: var(--border-strong); border-radius: 3px; }
+      ::-webkit-scrollbar-thumb:hover { background: var(--accent); }
+
+      /* ── App shell ── */
+      #app {
+        display: flex;
+        flex-direction: column;
+        height: 100vh;
+        overflow: hidden;
+      }
+
+      /* ── Header ── */
+      #ld-header {
+        height: var(--header-h);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 20px;
+        border-bottom: 1px solid var(--border);
+        background: var(--bg);
+        flex-shrink: 0;
+        z-index: 10;
+      }
+
+      #back-btn {
+        display: flex;
+        align-items: center;
+        gap: 7px;
+        font-size: 12px;
+        color: var(--text-soft);
+        transition: color 0.2s;
+      }
+      #back-btn:hover { color: var(--text); }
+
+      #header-brand {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+      .brand-note {
+        font-size: 18px;
+        color: var(--accent);
+        filter: drop-shadow(0 0 8px var(--accent-glow));
+      }
+      .brand-text {
+        font-family: var(--font-mono);
+        font-size: 11px;
+        letter-spacing: 0.14em;
+        color: var(--text-soft);
+      }
+
+      #logout-btn {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        font-size: 12px;
+        color: var(--muted);
+        padding: 6px 12px;
+        border-radius: 6px;
+        transition: color 0.2s, background 0.2s;
+      }
+      #logout-btn:hover { color: var(--text); background: var(--surface); }
+
+      /* ── Main 3-column ── */
+      #ld-main {
+        flex: 1;
+        display: flex;
+        overflow: hidden;
+        min-height: 0;
+      }
+
+      .panel-header-label {
+        font-family: var(--font-mono);
+        font-size: 10px;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--muted);
+        padding: 16px 16px 10px;
+        border-bottom: 1px solid var(--border);
+        flex-shrink: 0;
+      }
+
+      /* ── Library (left) ── */
+      #library {
+        width: 260px;
+        flex-shrink: 0;
+        border-right: 1px solid var(--border);
+        background: var(--bg-2);
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+      }
+
+      #song-list {
+        flex: 1;
+        overflow-y: auto;
+        list-style: none;
+        padding: 8px 0;
+      }
+
+      .song-item {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 10px 14px;
+        cursor: pointer;
+        border-left: 3px solid transparent;
+        transition: background 0.15s, border-color 0.15s;
+      }
+      .song-item:hover { background: var(--surface); }
+      .song-item.active {
+        background: var(--surface);
+        border-left-color: var(--accent);
+      }
+
+      .song-cover-wrap {
+        position: relative;
+        width: 42px;
+        height: 42px;
+        flex-shrink: 0;
+        border-radius: 6px;
+        overflow: hidden;
+        background: var(--surface-2);
+      }
+      .song-cover-wrap img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+      }
+      .cover-placeholder {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 18px;
+        color: var(--muted);
+        background: var(--surface-2);
+      }
+
+      .song-meta {
+        flex: 1;
+        min-width: 0;
+        display: flex;
+        flex-direction: column;
+        gap: 3px;
+      }
+      .song-title {
+        font-size: 13px;
+        font-weight: 500;
+        color: var(--text);
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: block;
+      }
+      .song-artist {
+        font-size: 11px;
+        color: var(--text-soft);
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: block;
+      }
+      .song-item.active .song-title { color: var(--accent); }
+
+      .song-duration {
+        font-family: var(--font-mono);
+        font-size: 11px;
+        color: var(--muted);
+        flex-shrink: 0;
+      }
+
+      .no-songs {
+        padding: 32px 16px;
+        text-align: center;
+        color: var(--muted);
+        font-size: 12px;
+      }
+
+      /* ── Lyrics Area (center) ── */
+      #lyrics-area {
+        flex: 1;
+        overflow-y: auto;
+        min-width: 0;
+        background: var(--bg);
+      }
+
+      #lyrics-scroll {
+        min-height: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 60px 40px;
+      }
+
+      #lyrics-empty-state {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 16px;
+        margin: auto;
+        color: var(--muted);
+        text-align: center;
+      }
+      .empty-note {
+        font-size: 48px;
+        opacity: 0.3;
+      }
+      #lyrics-empty-state p {
+        font-size: 14px;
+        line-height: 1.8;
+      }
+
+      #lyrics-lines {
+        width: 100%;
+        max-width: 640px;
+        padding-top: 30vh;
+        padding-bottom: 40vh;
+      }
+
+      .lyric-line {
+        display: block;
+        cursor: pointer;
+        padding: 10px 16px;
+        margin: 2px 0;
+        border-radius: 8px;
+        color: var(--text-soft);
+        opacity: 0.35;
+        font-size: 1.1rem;
+        font-weight: 400;
+        line-height: 1.65;
+        letter-spacing: -0.01em;
+        transition: opacity 0.35s var(--ease), font-size 0.35s var(--ease), color 0.35s var(--ease);
+        user-select: none;
+      }
+      .lyric-line:hover {
+        opacity: 0.65;
+        background: rgba(255,255,255,0.03);
+      }
+      .lyric-line.active {
+        opacity: 1;
+        font-size: 1.3rem;
+        font-weight: 500;
+        color: var(--text);
+        text-shadow: 0 0 28px var(--accent-glow);
+      }
+      .lyric-line.active:hover {
+        background: transparent;
+        opacity: 1;
+      }
+
+      .word {
+        display: inline;
+        cursor: pointer;
+        padding: 2px 4px;
+        border-radius: 4px;
+        transition: background 0.12s, color 0.12s;
+      }
+      .word:hover {
+        background: var(--accent-dim);
+        color: var(--accent);
+      }
+      .word.selected {
+        background: var(--accent-dim);
+        color: var(--accent);
+        outline: 1px solid rgba(91, 141, 246, 0.4);
+        border-radius: 4px;
+      }
+
+      .loading-lyrics, .lyrics-error {
+        text-align: center;
+        padding: 40px;
+        color: var(--muted);
+        font-size: 13px;
+        line-height: 1.8;
+      }
+      .lyrics-error small { display: block; margin-top: 8px; font-size: 11px; opacity: 0.6; }
+
+      /* ── Analysis Panel (right) ── */
+      #analysis-panel {
+        width: 300px;
+        flex-shrink: 0;
+        border-left: 1px solid var(--border);
+        background: var(--bg-2);
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+      }
+
+      #analysis-empty-state {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 14px;
+        color: var(--muted);
+        text-align: center;
+        padding: 32px 24px;
+      }
+      .panel-hint-icon { opacity: 0.3; }
+      #analysis-empty-state p { font-size: 12px; line-height: 1.7; opacity: 0.6; }
+
+      #analysis-content {
+        flex: 1;
+        overflow-y: auto;
+        padding: 16px;
+        animation: fadeIn 0.2s ease both;
+      }
+
+      @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(6px); }
+        to   { opacity: 1; transform: translateY(0); }
+      }
+
+      .panel-card { display: flex; flex-direction: column; gap: 16px; }
+
+      .panel-word-text {
+        font-size: 28px;
+        font-weight: 600;
+        color: var(--text);
+        letter-spacing: -0.02em;
+        line-height: 1.2;
+        padding-bottom: 14px;
+        border-bottom: 1px solid var(--border);
+      }
+
+      .panel-line-words {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px;
+        padding-bottom: 14px;
+        border-bottom: 1px solid var(--border);
+      }
+      .panel-word-chip {
+        font-size: 11px;
+        font-weight: 500;
+        background: var(--surface-2);
+        border: 1px solid var(--border);
+        border-radius: 4px;
+        padding: 4px 8px;
+        color: var(--text-soft);
+        cursor: default;
+        transition: border-color 0.15s;
+      }
+      .panel-word-chip:hover { border-color: var(--accent); color: var(--text); }
+
+      .panel-section { display: flex; flex-direction: column; gap: 6px; }
+
+      .panel-label {
+        font-family: var(--font-mono);
+        font-size: 9.5px;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--accent);
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+      .panel-label::before {
+        content: "";
+        display: inline-block;
+        width: 18px;
+        height: 1px;
+        background: var(--accent);
+        opacity: 0.5;
+      }
+
+      .panel-value {
+        font-size: 13px;
+        color: var(--text-soft);
+        line-height: 1.65;
+      }
+      .panel-translation {
+        font-size: 14px;
+        font-weight: 500;
+        color: var(--text);
+        font-style: italic;
+      }
+      .panel-analysis {
+        font-size: 12.5px;
+        line-height: 1.75;
+        color: var(--text-soft);
+      }
+
+      /* ── Player Bar ── */
+      #player-bar {
+        height: var(--player-h);
+        display: grid;
+        grid-template-columns: 1fr 2fr 1fr;
+        align-items: center;
+        padding: 0 20px;
+        border-top: 1px solid var(--border);
+        background: var(--surface);
+        flex-shrink: 0;
+        gap: 16px;
+      }
+
+      #now-playing {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        min-width: 0;
+      }
+
+      #cover-wrap {
+        position: relative;
+        width: 44px;
+        height: 44px;
+        flex-shrink: 0;
+        border-radius: 6px;
+        overflow: hidden;
+        background: var(--surface-2);
+      }
+      #cover-img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: none;
+      }
+      #cover-placeholder {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 18px;
+        color: var(--muted);
+      }
+
+      #track-info {
+        min-width: 0;
+        display: flex;
+        flex-direction: column;
+        gap: 3px;
+      }
+      #track-title {
+        font-size: 13px;
+        font-weight: 500;
+        color: var(--text);
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: block;
+      }
+      #track-artist {
+        font-size: 11px;
+        color: var(--text-soft);
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: block;
+      }
+
+      #controls-center {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 8px;
+      }
+
+      #ctrl-buttons {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+
+      .ctrl-btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        color: var(--text-soft);
+        transition: color 0.15s, background 0.15s;
+      }
+      .ctrl-btn:hover { color: var(--text); background: var(--surface-2); }
+
+      .ctrl-main {
+        width: 40px;
+        height: 40px;
+        background: var(--accent);
+        color: #fff;
+        border-radius: 50%;
+        transition: background 0.15s, transform 0.15s;
+      }
+      .ctrl-main:hover { background: var(--accent-hover); transform: scale(1.05); }
+
+      #progress-row {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        width: 100%;
+        max-width: 360px;
+      }
+
+      #progress-row span {
+        font-family: var(--font-mono);
+        font-size: 10px;
+        color: var(--muted);
+        white-space: nowrap;
+        min-width: 30px;
+      }
+      #progress-row span:last-child { text-align: right; }
+
+      #progress-track {
+        flex: 1;
+        height: 4px;
+        background: var(--border-strong);
+        border-radius: 2px;
+        cursor: pointer;
+        position: relative;
+        transition: height 0.15s;
+      }
+      #progress-track:hover { height: 6px; }
+      #progress-fill {
+        height: 100%;
+        width: 0%;
+        background: var(--accent);
+        border-radius: 2px;
+        pointer-events: none;
+        transition: width 0.1s linear;
+      }
+
+      #volume-ctrl {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        justify-content: flex-end;
+        color: var(--muted);
+      }
+
+      #volume-slider {
+        width: 80px;
+        height: 4px;
+        -webkit-appearance: none;
+        appearance: none;
+        background: var(--border-strong);
+        border-radius: 2px;
+        cursor: pointer;
+        outline: none;
+      }
+      #volume-slider::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        background: var(--accent);
+        cursor: pointer;
+      }
+      #volume-slider::-moz-range-thumb {
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        background: var(--accent);
+        border: none;
+        cursor: pointer;
+      }
+
+      /* ── Responsive ── */
+      @media (max-width: 900px) {
+        #library { width: 200px; }
+        #analysis-panel { width: 240px; }
+        #volume-ctrl { display: none; }
+      }
+      @media (max-width: 640px) {
+        #analysis-panel { display: none; }
+        #library { display: none; }
+        #lyrics-scroll { padding: 40px 20px; }
+      }
+    </style>
+
+    <!-- ───── OYNATICI MANTIĞI ───── -->
+    <script>
+      // ── Tipler ──
+      interface WordData {
+        text: string;
+        tr: string;
+        de_meaning: string;
+        context: string;
+      }
+      interface LyricLine {
+        time: number;
+        words: WordData[];
+        line_translation: string;
+        line_analysis: string;
+      }
+      interface AnalysisData {
+        meta: { title: string; artist: string; year: number; language: string };
+        lines: LyricLine[];
+      }
+      interface Song {
+        slug: string;
+        title: string;
+        artist: string;
+        year: number;
+        duration: number;
+        audioUrl: string;
+        coverUrl: string;
+        analysisUrl: string;
+      }
+
+      // ── Veri ──
+      const songs: Song[] = JSON.parse(
+        (document.getElementById('songs-data') as HTMLElement).textContent ?? '[]'
+      );
+
+      // ── Durum ──
+      let analysisData: AnalysisData | null = null;
+      let activeLineIdx = -1;
+      let rafId: number | null = null;
+      let panelMode: 'empty' | 'word' | 'line' = 'empty';
+      let currentSongIdx = -1;
+
+      // ── DOM referansları ──
+      const audioEl      = document.getElementById('audio-player') as HTMLAudioElement;
+      const songListEl   = document.getElementById('song-list')!;
+      const lyricsLinesEl     = document.getElementById('lyrics-lines')!;
+      const lyricsEmptyEl     = document.getElementById('lyrics-empty-state')!;
+      const analysisEmptyEl   = document.getElementById('analysis-empty-state')!;
+      const analysisContentEl = document.getElementById('analysis-content')!;
+      const btnPlay      = document.getElementById('btn-play')!;
+      const iconPlay     = document.getElementById('icon-play')!;
+      const iconPause    = document.getElementById('icon-pause')!;
+      const progressFill = document.getElementById('progress-fill')!;
+      const progressTrack= document.getElementById('progress-track')!;
+      const timeCurrent  = document.getElementById('time-current')!;
+      const timeTotal    = document.getElementById('time-total')!;
+      const coverImg     = document.getElementById('cover-img') as HTMLImageElement;
+      const coverPh      = document.getElementById('cover-placeholder')!;
+      const trackTitle   = document.getElementById('track-title')!;
+      const trackArtist  = document.getElementById('track-artist')!;
+      const volumeSlider = document.getElementById('volume-slider') as HTMLInputElement;
+      const logoutBtn    = document.getElementById('logout-btn')!;
+      const btnPrev      = document.getElementById('btn-prev')!;
+      const btnNext      = document.getElementById('btn-next')!;
+
+      // ── Yardımcılar ──
+      function fmt(s: number): string {
+        if (!isFinite(s)) return '0:00';
+        const m = Math.floor(s / 60);
+        const sec = Math.floor(s % 60);
+        return `${m}:${sec.toString().padStart(2, '0')}`;
+      }
+
+      // ── Kütüphane ──
+      function renderLibrary(): void {
+        songListEl.innerHTML = '';
+        if (!songs.length) {
+          songListEl.innerHTML = '<li class="no-songs">Henüz şarkı eklenmedi.<br><small>/public/music/ klasörüne ekle.</small></li>';
+          return;
+        }
+        songs.forEach((song, idx) => {
+          const li = document.createElement('li');
+          li.className = 'song-item';
+          li.dataset.idx = String(idx);
+          li.innerHTML = `
+            <div class="song-cover-wrap">
+              <img src="${song.coverUrl}" alt="${song.title}" width="42" height="42" />
+              <div class="cover-placeholder">♪</div>
+            </div>
+            <div class="song-meta">
+              <span class="song-title">${song.title}</span>
+              <span class="song-artist">${song.artist} · ${song.year}</span>
+            </div>
+            <span class="song-duration">${fmt(song.duration)}</span>
+          `;
+          // Kapak yükleme hatası
+          const img = li.querySelector('img') as HTMLImageElement;
+          img.addEventListener('error', () => {
+            img.style.display = 'none';
+            (li.querySelector('.cover-placeholder') as HTMLElement).style.display = 'flex';
+          });
+          img.addEventListener('load', () => {
+            img.style.display = 'block';
+            (li.querySelector('.cover-placeholder') as HTMLElement).style.display = 'none';
+          });
+          li.addEventListener('click', () => selectSong(idx));
+          songListEl.appendChild(li);
+        });
+      }
+
+      // ── Şarkı seçimi ──
+      async function selectSong(idx: number): Promise<void> {
+        if (idx === currentSongIdx) return;
+
+        stopSync();
+        audioEl.pause();
+        currentSongIdx = idx;
+        const song = songs[idx];
+
+        // Kütüphane aktif durumu
+        document.querySelectorAll('.song-item').forEach(el => el.classList.remove('active'));
+        document.querySelector(`[data-idx="${idx}"]`)?.classList.add('active');
+
+        // Player bar güncelle
+        coverImg.src = song.coverUrl;
+        coverImg.style.display = 'none';
+        coverPh.style.display = 'flex';
+        coverImg.onload = () => {
+          coverImg.style.display = 'block';
+          coverPh.style.display = 'none';
+        };
+        coverImg.onerror = () => {
+          coverImg.style.display = 'none';
+          coverPh.style.display = 'flex';
+        };
+        trackTitle.textContent = song.title;
+        trackArtist.textContent = song.artist;
+
+        // Audio yükle
+        audioEl.src = song.audioUrl;
+        audioEl.load();
+
+        // Lirik alanını sıfırla
+        lyricsEmptyEl.hidden = true;
+        lyricsLinesEl.hidden = false;
+        lyricsLinesEl.innerHTML = '<div class="loading-lyrics">Yükleniyor…</div>';
+        activeLineIdx = -1;
+        resetPanel();
+
+        // Analysis JSON'u yükle
+        try {
+          const res = await fetch(song.analysisUrl);
+          if (!res.ok) throw new Error(`HTTP ${res.status}`);
+          analysisData = await res.json() as AnalysisData;
+          renderLyrics(analysisData.lines);
+        } catch (err) {
+          analysisData = null;
+          lyricsLinesEl.innerHTML = `<div class="lyrics-error">
+            Lirik verisi yüklenemedi.<br>
+            <small>${song.analysisUrl} → ${err}</small>
+          </div>`;
+        }
+      }
+
+      // ── Lirik render ──
+      function renderLyrics(lines: LyricLine[]): void {
+        lyricsLinesEl.innerHTML = '';
+
+        lines.forEach((line, lineIdx) => {
+          const p = document.createElement('p');
+          p.className = 'lyric-line';
+          p.dataset.line = String(lineIdx);
+
+          line.words.forEach((word, wordIdx) => {
+            const span = document.createElement('span');
+            span.className = 'word';
+            span.dataset.line = String(lineIdx);
+            span.dataset.word = String(wordIdx);
+            span.textContent = word.text;
+
+            span.addEventListener('mouseenter', () => {
+              if (panelMode !== 'line') {
+                showWordPanel(word);
+              }
+            });
+
+            p.appendChild(span);
+            p.appendChild(document.createTextNode(' '));
+          });
+
+          lyricsLinesEl.appendChild(p);
+        });
+
+        // Event delegation ile tıklama yönetimi
+        lyricsLinesEl.addEventListener('click', handleLyricsClick, { once: false });
+      }
+
+      function handleLyricsClick(e: MouseEvent): void {
+        const target = e.target as HTMLElement;
+
+        if (target.classList.contains('word')) {
+          e.stopPropagation();
+          const lineIdx = parseInt(target.dataset.line!);
+          const wordIdx = parseInt(target.dataset.word!);
+          const word = analysisData!.lines[lineIdx].words[wordIdx];
+
+          document.querySelectorAll('.word.selected').forEach(w => w.classList.remove('selected'));
+          target.classList.add('selected');
+          showWordPanel(word);
+          panelMode = 'word';
+          return;
+        }
+
+        const lineEl = target.closest('.lyric-line') as HTMLElement | null;
+        if (lineEl) {
+          const lineIdx = parseInt(lineEl.dataset.line!);
+          document.querySelectorAll('.word.selected').forEach(w => w.classList.remove('selected'));
+          showLinePanel(analysisData!.lines[lineIdx]);
+          panelMode = 'line';
+        }
+      }
+
+      // ── Analiz paneli ──
+      function showWordPanel(word: WordData): void {
+        analysisEmptyEl.hidden = true;
+        analysisContentEl.hidden = false;
+        analysisContentEl.innerHTML = `
+          <div class="panel-card">
+            <div class="panel-word-text">${word.text}</div>
+            <div class="panel-section">
+              <div class="panel-label">Türkçe</div>
+              <div class="panel-value">${word.tr}</div>
+            </div>
+            <div class="panel-section">
+              <div class="panel-label">Almanca Anlam</div>
+              <div class="panel-value">${word.de_meaning}</div>
+            </div>
+            <div class="panel-section">
+              <div class="panel-label">Bağlam</div>
+              <div class="panel-value panel-analysis">${word.context}</div>
+            </div>
+          </div>`;
+      }
+
+      function showLinePanel(line: LyricLine): void {
+        analysisEmptyEl.hidden = true;
+        analysisContentEl.hidden = false;
+
+        const chips = line.words
+          .map(w => `<span class="panel-word-chip" title="${w.tr}">${w.text}</span>`)
+          .join('');
+
+        analysisContentEl.innerHTML = `
+          <div class="panel-card">
+            <div class="panel-line-words">${chips}</div>
+            <div class="panel-section">
+              <div class="panel-label">Edebi Çeviri</div>
+              <div class="panel-value panel-translation">"${line.line_translation}"</div>
+            </div>
+            <div class="panel-section">
+              <div class="panel-label">Derin Analiz</div>
+              <div class="panel-value panel-analysis">${line.line_analysis}</div>
+            </div>
+          </div>`;
+      }
+
+      function resetPanel(): void {
+        analysisEmptyEl.hidden = false;
+        analysisContentEl.hidden = true;
+        analysisContentEl.innerHTML = '';
+        panelMode = 'empty';
+        document.querySelectorAll('.word.selected').forEach(w => w.classList.remove('selected'));
+      }
+
+      // ── Senkronizasyon motoru ──
+      function startSync(): void {
+        if (rafId !== null) return;
+        function tick(): void {
+          if (!analysisData) { rafId = null; return; }
+          const t = audioEl.currentTime;
+          const lines = analysisData.lines;
+
+          let newIdx = -1;
+          for (let i = lines.length - 1; i >= 0; i--) {
+            if (lines[i].time <= t) { newIdx = i; break; }
+          }
+
+          if (newIdx !== activeLineIdx) {
+            document.querySelector(`.lyric-line[data-line="${activeLineIdx}"]`)
+              ?.classList.remove('active');
+            const el = document.querySelector(`.lyric-line[data-line="${newIdx}"]`);
+            if (el) {
+              el.classList.add('active');
+              el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+            activeLineIdx = newIdx;
+          }
+
+          rafId = requestAnimationFrame(tick);
+        }
+        rafId = requestAnimationFrame(tick);
+      }
+
+      function stopSync(): void {
+        if (rafId !== null) {
+          cancelAnimationFrame(rafId);
+          rafId = null;
+        }
+      }
+
+      // ── Oynatma kontrolleri ──
+      async function togglePlay(): Promise<void> {
+        if (!audioEl.src || audioEl.src === window.location.href) return;
+        if (audioEl.paused) {
+          try { await audioEl.play(); } catch { /* ses dosyası yoksa sessizce geç */ }
+        } else {
+          audioEl.pause();
+        }
+      }
+
+      function setPlayUI(playing: boolean): void {
+        (iconPlay as SVGElement).hidden = playing;
+        (iconPause as SVGElement).hidden = !playing;
+      }
+
+      // ── Audio event'ları ──
+      audioEl.addEventListener('play', () => { setPlayUI(true); startSync(); });
+      audioEl.addEventListener('pause', () => { setPlayUI(false); stopSync(); });
+      audioEl.addEventListener('ended', () => {
+        setPlayUI(false);
+        stopSync();
+        if (currentSongIdx < songs.length - 1) selectSong(currentSongIdx + 1);
+      });
+      audioEl.addEventListener('timeupdate', () => {
+        if (!audioEl.duration) return;
+        const pct = (audioEl.currentTime / audioEl.duration) * 100;
+        progressFill.style.width = `${pct}%`;
+        timeCurrent.textContent = fmt(audioEl.currentTime);
+      });
+      audioEl.addEventListener('loadedmetadata', () => {
+        timeTotal.textContent = fmt(audioEl.duration);
+      });
+      audioEl.addEventListener('error', () => {
+        if (currentSongIdx >= 0) {
+          trackArtist.textContent = `${songs[currentSongIdx].artist} · (ses dosyası bulunamadı)`;
+        }
+      });
+
+      // ── İlerleme çubuğu tıklama ──
+      progressTrack.addEventListener('click', (e: MouseEvent) => {
+        if (!audioEl.duration) return;
+        const rect = progressTrack.getBoundingClientRect();
+        const pct = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
+        audioEl.currentTime = pct * audioEl.duration;
+      });
+
+      // ── Ses seviyesi ──
+      volumeSlider.addEventListener('input', () => {
+        audioEl.volume = parseFloat(volumeSlider.value);
+      });
+      audioEl.volume = parseFloat(volumeSlider.value);
+
+      // ── Butonlar ──
+      btnPlay.addEventListener('click', togglePlay);
+      btnPrev.addEventListener('click', () => {
+        if (currentSongIdx > 0) selectSong(currentSongIdx - 1);
+      });
+      btnNext.addEventListener('click', () => {
+        if (currentSongIdx < songs.length - 1) selectSong(currentSongIdx + 1);
+      });
+      logoutBtn.addEventListener('click', () => {
+        sessionStorage.removeItem('ld_auth');
+        window.location.replace('/lernen-deutsch/login');
+      });
+
+      // ── Lirik/panel dışı tıklamada paneli sıfırla ──
+      document.addEventListener('click', (e: MouseEvent) => {
+        const t = e.target as HTMLElement;
+        if (
+          !t.closest('#lyrics-lines') &&
+          !t.closest('#analysis-panel') &&
+          panelMode !== 'empty'
+        ) {
+          resetPanel();
+        }
+      });
+
+      // ── Klavye kısayolları ──
+      document.addEventListener('keydown', (e: KeyboardEvent) => {
+        if (e.target instanceof HTMLInputElement || e.target instanceof HTMLTextAreaElement) return;
+        if (e.code === 'Space') { e.preventDefault(); togglePlay(); }
+        if (e.code === 'ArrowLeft') audioEl.currentTime = Math.max(0, audioEl.currentTime - 5);
+        if (e.code === 'ArrowRight') audioEl.currentTime = Math.min(audioEl.duration || 0, audioEl.currentTime + 5);
+      });
+
+      // ── Başlatma ──
+      renderLibrary();
+    </script>
+
+  </body>
+</html>
