@@ -19,7 +19,7 @@ jobs:
           cache: 'npm'
 
       - name: Build al (GitHub Actions üzerinde)
-        run: npm ci && npm run build
+        run: npm install && npm run build
 
       - name: dist/ klasörünü VPS'e kopyala
         uses: appleboy/scp-action@v0.1.7
