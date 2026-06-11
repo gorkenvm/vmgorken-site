@@ -140,22 +140,47 @@ Bu sitenin kurulumu sırasında karşılaşılan gerçek sorunlar ve çözümler
 **Sebep:** Docker Compose container'ın izini kaybetmiş, "hayalet" bir kopya oluşmuş.
 **Çözüm:** `docker compose down` + `docker compose up -d` ile temizle.
 
-### 🔴 `stop`/`restart`/`down` → "permission denied"
+### 🔴 `stop`/`restart`/`down` → "permission denied" (KÖK SEBEP: snap Docker)
 **Belirti:** Container hiçbir durdurma komutuna yanıt vermez, "permission denied" der.
-**Sebep:** Kernel/AppArmor container'ı kilitlemiş (root daemon bile durduramaz). Genelde
-kernel güncellenip makine yeniden başlatılmamıştır.
-**Çözüm (sırayla):**
-1. Sürecin PID'ini bul ve öldür:
-   ```bash
-   docker inspect --format '{{.State.Pid}}' <container>
-   sudo kill -9 <PID>
-   ```
-2. Kalıcı çözüm — VPS'i yeniden başlat (kernel + AppArmor profillerini tazeler):
-   ```bash
-   sudo reboot
-   ```
-   Tüm container'larda `restart` politikası (`unless-stopped`/`always`) olduğundan, makine
-   açılınca hepsi otomatik geri gelir.
+Reboot bile kalıcı çözmez — bir süre sonra geri gelir.
+
+**Teşhis:** `sudo dmesg | grep -i apparmor | tail` çalıştır. Şuna benzer satır görürsün:
+```
+apparmor="DENIED" operation="signal" profile="docker-default"
+   signal=kill peer="snap.docker.dockerd"
+```
+
+**Kök sebep:** Docker **snap paketi** olarak kurulu (`snap.docker.dockerd`). Snap Docker
+kendi AppArmor profili altında çalışır; container'ların `docker-default` profili,
+`snap.docker.dockerd` peer'ından gelen kill/quit sinyallerini reddeder. Sonuç: dockerd
+container'ı durduramaz. Bu, snap Docker + AppArmor'ın bilinen uyumsuzluğudur.
+
+**Kalıcı çözüm (hedefli, güvenli):** İlgili container'ı AppArmor kilidinden muaf tut.
+Compose dosyasına ekle:
+```yaml
+    security_opt:
+      - apparmor=unconfined
+```
+Yeni profili uygulamak için (eski container hâlâ kilitli olduğundan tek seferlik):
+```bash
+docker update --restart=no vmgorken_site          # otomatik yeniden başlatmayı kapat
+PID=$(docker inspect --format '{{.State.Pid}}' vmgorken_site)
+sudo kill -9 $PID                                  # süreci öldür (geri gelmez)
+docker rm vmgorken_site                            # ölü container'ı sil
+docker compose up -d                               # yeni profille kur
+docker compose restart                             # TEST: artık ✔ Restarted demeli
+```
+Bundan sonra container normal şekilde yönetilebilir; PID öldürmeye gerek kalmaz.
+
+**Acil kurtarma (kalıcı çözümden önce site'ı geri getirmek için):**
+```bash
+docker inspect --format '{{.State.Pid}}' <container>
+sudo kill -9 <PID>
+docker compose up -d
+```
+
+**Asıl doğru çözüm (opsiyonel, büyük iş):** Snap Docker'ı kaldırıp resmi APT Docker'a
+(`docker-ce`) geçmek sorunu kökten bitirir — ama n8n/postgres verilerini taşımak gerekir.
 
 ### 🔴 403 Forbidden (deploy başarılı ama site açılmıyor)
 **Belirti:** GitHub Actions yeşil, dosyalar VPS'e gitti ama site `403 Forbidden` veriyor.
