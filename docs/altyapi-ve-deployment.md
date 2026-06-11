@@ -157,6 +157,23 @@ kernel güncellenip makine yeniden başlatılmamıştır.
    Tüm container'larda `restart` politikası (`unless-stopped`/`always`) olduğundan, makine
    açılınca hepsi otomatik geri gelir.
 
+### 🔴 403 Forbidden (deploy başarılı ama site açılmıyor)
+**Belirti:** GitHub Actions yeşil, dosyalar VPS'e gitti ama site `403 Forbidden` veriyor.
+**Sebep:** Deploy adımı `rm: true` ile `dist` klasörünü **silip yeniden yaratıyordu**.
+Klasör silinip yeniden yaratılınca **yeni bir inode** oluşur; nginx hâlâ eski (silinmiş)
+inode'u bind-mount ile bağlı tuttuğu için yeni dosyaları göremez → boş dizin → 403.
+**Çözüm:**
+1. Kalıcı düzeltme: deploy.yml'den `rm: true`'yu kaldır (dosyalar yerinde güncellenir,
+   inode korunur, mount kopmaz).
+2. Tek seferlik kurtarma (mount'u tazele):
+   ```bash
+   cd ~/docker/website
+   docker compose up -d --force-recreate
+   docker exec vmgorken_site ls /usr/share/nginx/html   # index.html görmeli
+   ```
+**Ders:** Bir klasör bir container'a bind-mount edilmişse, o klasörü host'ta **silme** —
+içindeki dosyaları üzerine yaz. Silmek mount'u koparır.
+
 ### 🔴 GitHub Actions build patlıyor: `npm ci can only install when ... in sync`
 **Belirti:** Lokalde build çalışıyor ama Actions'ta `npm ci` "lock dosyası senkron değil" der.
 **Sebep:** Lokal ve Actions farklı Node/npm sürümleri kullanıyor; lock dosyası uyuşmuyor.

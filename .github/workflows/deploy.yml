@@ -21,6 +21,9 @@ jobs:
       - name: Build al (GitHub Actions üzerinde)
         run: npm install && npm run build
 
+      # NOT: rm: true KULLANMA — dist klasörünü silip yeniden yaratmak,
+      # nginx'in bind-mount'unu koparır (yeni inode) ve 403'e yol açar.
+      # Dosyaları yerinde üzerine yazıyoruz; mount korunur.
       - name: dist/ klasörünü VPS'e kopyala
         uses: appleboy/scp-action@v0.1.7
         with:
@@ -29,7 +32,6 @@ jobs:
           key: ${{ secrets.VPS_SSH_KEY }}
           source: "dist"
           target: "/home/vmg/www/vmgorken-site/"
-          rm: true
 
       - name: Dosya izinlerini düzelt
         uses: appleboy/ssh-action@v1.0.3
