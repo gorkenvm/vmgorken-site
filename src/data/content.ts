@@ -11,8 +11,6 @@ export const site = {
   locationFull: "Dortmund, Germany · Open to relocation within Germany",
   linkedin: "https://linkedin.com/in/vmgorken",
   github: "https://github.com/gorkenvm",
-  cvUrlEN: "/cv/VMGorken_CV_EN.pdf",
-  cvUrlDE: "/cv/VMGorken_CV_DE.pdf",
 };
 
 export const hero = {
@@ -31,10 +29,6 @@ export const hero = {
     "Docker",
     "PostgreSQL",
   ],
-  ctas: {
-    cvEN: { label: "Download CV (EN)", href: "/cv/VMGorken_CV_EN.pdf" },
-    cvDE: { label: "Download CV (DE)", href: "/cv/VMGorken_CV_DE.pdf" },
-  },
 };
 
 export const metrics = [
