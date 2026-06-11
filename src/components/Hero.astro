@@ -3,78 +3,32 @@ import { hero, site } from "../data/content";
 ---
 
 <section class="hero" id="hero">
-  <div class="hero-bg" aria-hidden="true"></div>
 
-  <!-- Animasyonlu nokta dokulu arka plan -->
-  <div class="hero-grid" aria-hidden="true"></div>
-
-  <div class="hero-content fade-up">
-    <img
-      src="/photo.jpg"
-      alt={site.name}
-      class="hero-photo"
-      width="120"
-      height="120"
-      loading="eager"
-    />
-
-    <div class="hero-tag">{hero.tag}</div>
-
-    <h1 class="hero-name">
-      {hero.name}<br />{hero.surname}
-    </h1>
-
-    <p class="hero-title">{hero.title}</p>
-
-    <p class="hero-bio">{hero.bio}</p>
-
-    <div class="hero-chips">
-      {hero.chips.map((c) => <span class="chip">{c}</span>)}
-    </div>
-
-    <div class="hero-links">
-      <a href={hero.ctas.primary.href} class="btn btn--primary">
-        {hero.ctas.primary.label}
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
-          <line x1="5" y1="12" x2="19" y2="12"></line>
-          <polyline points="12 5 19 12 12 19"></polyline>
-        </svg>
-      </a>
-      <a href={hero.ctas.secondary.href} class="btn btn--ghost" download>
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-          <polyline points="7 10 12 15 17 10"></polyline>
-          <line x1="12" y1="15" x2="12" y2="3"></line>
-        </svg>
-        {hero.ctas.secondary.label}
-      </a>
-      <a href={site.github} target="_blank" rel="noopener" class="btn btn--ghost">
-        GitHub
-      </a>
-      <a href="/lernen-deutsch" class="btn btn--ghost btn--deutsch">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M9 18V5l12-2v13"></path>
-          <circle cx="6" cy="18" r="3"></circle>
-          <circle cx="18" cy="16" r="3"></circle>
-        </svg>
-        Lernen Deutsch
-      </a>
-    </div>
-
-    <div class="hero-location">
-      <span class="status-dot"></span>
-      DORTMUND, ALMANYA &nbsp;·&nbsp; AVRUPA GENELİNE AÇIK
-    </div>
+  <div class="blobs" aria-hidden="true">
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
+    <div class="blob blob-4"></div>
   </div>
 
-  <!-- Aşağı kaydır göstergesi -->
-  <a href="#metrics" class="scroll-cue" aria-label="Aşağı kaydır">
-    <span>scroll</span>
-    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-      <line x1="12" y1="5" x2="12" y2="19"></line>
-      <polyline points="19 12 12 19 5 12"></polyline>
-    </svg>
-  </a>
+  <div class="hero-grid" aria-hidden="true"></div>
+
+  <img
+    src="/photo.jpg"
+    alt={site.name}
+    class="hero-photo"
+    width="60"
+    height="60"
+    loading="eager"
+  />
+
+  <h1 class="hero-name" id="scramble-name" aria-label={site.name}>&nbsp;</h1>
+
+  <div class="scroll-cue">
+    <span class="scroll-label">SCROLL TO EXPLORE</span>
+    <div class="scroll-line"></div>
+  </div>
+
 </section>
 
 <style>
@@ -82,178 +36,209 @@ import { hero, site } from "../data/content";
     min-height: 100vh;
     display: flex;
     align-items: center;
-    justify-content: center;
-    padding: 80px 60px 100px;
+    padding: 0 60px;
     overflow: hidden;
     position: relative;
+    background: #08090d;
   }
 
-  .hero-bg {
+  /* Blobs */
+  .blobs {
     position: absolute;
     inset: 0;
-    background:
-      radial-gradient(ellipse 60% 50% at 75% 40%, rgba(91, 141, 246, 0.10) 0%, transparent 70%),
-      radial-gradient(ellipse 50% 60% at 25% 75%, rgba(177, 129, 246, 0.05) 0%, transparent 60%);
     pointer-events: none;
+    overflow: hidden;
   }
+  .blob {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(110px);
+  }
+  .blob-1 { width:650px; height:650px; background:#0e7490; top:-220px; left:-180px; opacity:.18; animation:b1 11s ease-in-out infinite alternate; }
+  .blob-2 { width:550px; height:550px; background:#5b21b6; bottom:-120px; right:-80px; opacity:.16; animation:b2 15s ease-in-out infinite alternate; }
+  .blob-3 { width:380px; height:380px; background:#065f46; top:45%; left:55%; opacity:.13; animation:b3 9s ease-in-out infinite alternate; }
+  .blob-4 { width:300px; height:300px; background:#1e3a8a; top:15%; right:20%; opacity:.14; animation:b4 13s ease-in-out infinite alternate; }
 
+  @keyframes b1 { from{transform:translate(0,0) scale(1)} to{transform:translate(140px,90px) scale(1.18)} }
+  @keyframes b2 { from{transform:translate(0,0) scale(1)} to{transform:translate(-100px,-70px) scale(1.12)} }
+  @keyframes b3 { from{transform:translate(0,0) scale(1)} to{transform:translate(70px,-100px) scale(0.88)} }
+  @keyframes b4 { from{transform:translate(0,0) scale(1)} to{transform:translate(-60px,80px) scale(1.15)} }
+
+  /* Grid */
   .hero-grid {
     position: absolute;
     inset: 0;
-    background-image: radial-gradient(
-      circle,
-      rgba(91, 141, 246, 0.08) 1px,
-      transparent 1px
-    );
-    background-size: 36px 36px;
-    mask-image: radial-gradient(ellipse 70% 60% at 50% 50%, #000 30%, transparent 80%);
-    -webkit-mask-image: radial-gradient(ellipse 70% 60% at 50% 50%, #000 30%, transparent 80%);
+    background-image: radial-gradient(circle, rgba(255,255,255,0.055) 1px, transparent 1px);
+    background-size: 38px 38px;
+    mask-image: radial-gradient(ellipse 100% 80% at 50% 50%, #000 10%, transparent 80%);
+    -webkit-mask-image: radial-gradient(ellipse 100% 80% at 50% 50%, #000 10%, transparent 80%);
     pointer-events: none;
-    opacity: 0.6;
   }
 
-  .hero-content {
-    max-width: 640px;
-    position: relative;
-    z-index: 1;
-  }
-
-  .hero-tag {
-    font-family: var(--font-mono);
-    font-size: 11px;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: var(--accent);
-    margin-bottom: 20px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
-  .hero-tag::before {
-    content: "";
-    display: inline-block;
-    width: 28px;
-    height: 1px;
-    background: var(--accent);
-  }
-
-  .hero-name {
-    font-size: clamp(36px, 5.5vw, 64px);
-    font-weight: 600;
-    letter-spacing: -0.025em;
-    line-height: 1.05;
-    margin-bottom: 18px;
-    color: var(--text);
-  }
-
-  .hero-title {
-    font-size: 19px;
-    font-weight: 300;
-    color: var(--text-soft);
-    margin-bottom: 28px;
-    letter-spacing: -0.005em;
-  }
-
-  .hero-bio {
-    font-size: 15px;
-    color: var(--text-soft);
-    line-height: 1.75;
-    max-width: 540px;
-    margin-bottom: 36px;
-    border-left: 2px solid var(--border);
-    padding-left: 18px;
-  }
-
-  .hero-chips {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-    margin-bottom: 40px;
-  }
-
-  .hero-links {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 12px;
-    align-items: center;
-    margin-bottom: 48px;
-  }
-
+  /* Photo */
   .hero-photo {
-    width: 120px;
-    height: 120px;
+    position: absolute;
+    top: 40px;
+    left: 60px;
+    width: 60px;
+    height: 60px;
     border-radius: 50%;
     object-fit: cover;
     object-position: center top;
-    border: 2px solid var(--border);
-    margin-bottom: 28px;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+    border: 1.5px solid rgba(255,255,255,0.12);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+    z-index: 2;
   }
 
-  .hero-location {
-    font-family: var(--font-mono);
-    font-size: 11px;
-    color: var(--muted-dim);
-    letter-spacing: 0.08em;
-    display: flex;
-    align-items: center;
-    gap: 10px;
+  /* Title */
+  .hero-name {
+    font-family: 'Bebas Neue', sans-serif;
+    font-weight: 400;
+    letter-spacing: 0.03em;
+    line-height: 1.0;
+    color: #fff;
+    text-transform: uppercase;
+    white-space: nowrap;
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    text-align: center;
+    font-size: clamp(52px, 9vw, 120px);
+    min-height: 1.05em;
   }
 
-  .status-dot {
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    background: var(--green);
-    box-shadow: 0 0 0 0 rgba(97, 216, 137, 0.5);
-    animation: pulseDot 2s infinite;
-    flex-shrink: 0;
+  /* Blinking cursor */
+  .hero-name::after {
+    content: '|';
+    margin-left: 3px;
+    animation: blink 1s step-end infinite;
+  }
+  @keyframes blink {
+    0%, 49% { opacity: 1; }
+    50%, 100% { opacity: 0; }
   }
 
-  @keyframes pulseDot {
-    0% { box-shadow: 0 0 0 0 rgba(97, 216, 137, 0.5); }
-    70% { box-shadow: 0 0 0 10px rgba(97, 216, 137, 0); }
-    100% { box-shadow: 0 0 0 0 rgba(97, 216, 137, 0); }
-  }
-
+  /* Scroll cue */
   .scroll-cue {
     position: absolute;
-    bottom: 36px;
+    bottom: 44px;
     left: 50%;
     transform: translateX(-50%);
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 6px;
+    gap: 14px;
+    z-index: 2;
+  }
+  .scroll-label {
     font-family: var(--font-mono);
-    font-size: 9.5px;
-    letter-spacing: 0.2em;
+    font-size: 10px;
+    letter-spacing: 0.28em;
     text-transform: uppercase;
-    color: var(--muted-dim);
-    text-decoration: none;
-    transition: color 0.2s;
-    animation: bobbing 2.4s ease-in-out infinite;
+    color: rgba(255,255,255,0.35);
+    white-space: nowrap;
   }
-  .scroll-cue:hover { color: var(--accent); }
-
-  @keyframes bobbing {
-    0%, 100% { transform: translate(-50%, 0); }
-    50% { transform: translate(-50%, 6px); }
+  .scroll-line {
+    width: 1px;
+    height: 64px;
+    background: linear-gradient(to bottom, rgba(255,255,255,0.35), transparent);
+    transform-origin: top;
+    animation: lineGrow 1.8s ease-in-out infinite;
   }
-
-  .btn--deutsch {
-    border-color: rgba(177, 129, 246, 0.3);
-    color: var(--purple);
-  }
-  .btn--deutsch:hover {
-    border-color: var(--purple);
-    color: var(--text);
-    background: rgba(177, 129, 246, 0.08);
+  @keyframes lineGrow {
+    0%   { transform: scaleY(0); opacity: 1; }
+    60%  { transform: scaleY(1); opacity: 1; }
+    100% { transform: scaleY(1); opacity: 0; }
   }
 
   @media (max-width: 860px) {
-    .hero { padding: 64px 24px 120px; min-height: auto; }
-    .hero-photo { width: 96px; height: 96px; }
-    .scroll-cue { display: none; }
+    .hero { padding: 0 24px; }
+    .hero-photo { left: 24px; top: 28px; width: 48px; height: 48px; }
   }
 </style>
+
+<script>
+  const TEXTS     = ["VEYSEL MURAT GORKEN", "DATA SCIENTIST & AI ENGINEER"];
+  const GLITCH    = "!@#$%^&*_+<>?~[]{}";
+  const STEP_MS   = 28;
+  const GLITCH_MS = 25;
+  const HOLD_MS   = 2400;
+  const PAUSE_MS  = 350;
+
+  const el = document.getElementById("scramble-name") as HTMLElement;
+
+  const sleep     = (ms: number) => new Promise<void>(r => setTimeout(r, ms));
+  const rndGlitch = () => GLITCH[Math.floor(Math.random() * GLITCH.length)];
+
+  function calcFontSize(text: string): number {
+    const availW   = (el.parentElement as HTMLElement).offsetWidth;
+    const savedFs  = el.style.fontSize;
+    const savedTxt = el.textContent;
+
+    let lo = 16, hi = 500;
+    while (hi - lo > 1) {
+      const mid = (lo + hi) >> 1;
+      el.style.fontSize = mid + "px";
+      el.textContent    = text;
+      if (el.scrollWidth <= availW) lo = mid; else hi = mid;
+    }
+    el.style.fontSize = savedFs;
+    el.textContent    = savedTxt;
+    return lo;
+  }
+
+  const sizes = TEXTS.map(calcFontSize);
+  let idx = 0;
+
+  // Render a centered window of `len` chars from `full`,
+  // optionally glitching the two leading/trailing edge chars.
+  function render(full: string, len: number, glitchEdges: boolean) {
+    if (len <= 0) { el.textContent = " "; return; }
+    const N = full.length;
+    const start = Math.floor((N - len) / 2);
+    const chars = full.slice(start, start + len).split("");
+    if (glitchEdges) {
+      chars[0] = rndGlitch();
+      chars[chars.length - 1] = rndGlitch();
+    }
+    el.textContent = chars.join("");
+  }
+
+  async function run() {
+    while (true) {
+      const full = TEXTS[idx];
+      const N = full.length;
+      el.style.fontSize = sizes[idx] + "px";
+
+      // OPEN — grow from center outward to both sides
+      for (let len = 1; len <= N; len += 2) {
+        render(full, len, true);          // glitch the new edges
+        await sleep(GLITCH_MS);
+        render(full, len, false);         // settle to real chars
+        await sleep(STEP_MS);
+      }
+      render(full, N, false);
+
+      await sleep(HOLD_MS);
+
+      // CLOSE — converge from both ends toward the center
+      for (let len = N; len > 0; len -= 2) {
+        render(full, len, true);          // glitch the dying edges
+        await sleep(GLITCH_MS);
+        render(full, len - 2, false);     // shrink toward center
+        await sleep(STEP_MS);
+      }
+      el.textContent = " ";
+
+      idx = (idx + 1) % TEXTS.length;
+      await sleep(PAUSE_MS);
+    }
+  }
+
+  run();
+
+  window.addEventListener("resize", () => {
+    TEXTS.forEach((t, i) => { sizes[i] = calcFontSize(t); });
+    el.style.fontSize = sizes[idx] + "px";
+  });
+</script>

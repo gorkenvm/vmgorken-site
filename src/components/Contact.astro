@@ -1,14 +1,66 @@
 ---
-import { site } from "../data/content";
+import { site, contact } from "../data/content";
 ---
 
 <section class="section contact-section" id="contact">
   <div class="section-inner">
     <div class="contact-body reveal">
-      <div class="section-eyebrow">İletişim</div>
-      <h2 class="section-title">Ulaşın</h2>
+      <div class="section-eyebrow">Contact</div>
+      <h2 class="section-title">{contact.title}</h2>
+      <p class="contact-sub">{contact.subtitle}</p>
 
-      <a href={`mailto:${site.email}`} class="email-link">{site.email}</a>
+      <div class="contact-links">
+        <a href={`mailto:${site.email}`} class="contact-link">
+          <span class="contact-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="2" y="4" width="20" height="16" rx="2"></rect>
+              <path d="M2 7l10 7 10-7"></path>
+            </svg>
+          </span>
+          <span class="contact-text">
+            <span class="contact-label">Email</span>
+            <span class="contact-value">{site.email}</span>
+          </span>
+          <svg class="contact-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M7 17L17 7"></path>
+            <path d="M7 7h10v10"></path>
+          </svg>
+        </a>
+
+        <a href={site.linkedin} target="_blank" rel="noopener" class="contact-link">
+          <span class="contact-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
+              <rect x="2" y="9" width="4" height="12"></rect>
+              <circle cx="4" cy="4" r="2"></circle>
+            </svg>
+          </span>
+          <span class="contact-text">
+            <span class="contact-label">LinkedIn</span>
+            <span class="contact-value">in/vmgorken</span>
+          </span>
+          <svg class="contact-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M7 17L17 7"></path>
+            <path d="M7 7h10v10"></path>
+          </svg>
+        </a>
+
+        <a href={site.github} target="_blank" rel="noopener" class="contact-link">
+          <span class="contact-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+            </svg>
+          </span>
+          <span class="contact-text">
+            <span class="contact-label">GitHub</span>
+            <span class="contact-value">gorkenvm</span>
+          </span>
+          <svg class="contact-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M7 17L17 7"></path>
+            <path d="M7 7h10v10"></path>
+          </svg>
+        </a>
+      </div>
     </div>
 
     <footer class="site-footer">
@@ -18,7 +70,7 @@ import { site } from "../data/content";
         <span>·</span>
         <a href={site.linkedin} target="_blank" rel="noopener">LinkedIn</a>
         <span>·</span>
-        <a href={`mailto:${site.email}`}>E-posta</a>
+        <a href={`mailto:${site.email}`}>Email</a>
       </div>
     </footer>
   </div>
@@ -33,16 +85,82 @@ import { site } from "../data/content";
     margin-bottom: 80px;
   }
 
-  .email-link {
-    display: inline-block;
-    margin-top: 20px;
-    font-size: 20px;
-    color: var(--accent);
-    text-decoration: underline;
-    text-underline-offset: 4px;
+  .contact-sub {
+    font-size: 15px;
+    color: var(--text-soft);
+    line-height: 1.7;
+    max-width: 500px;
+    margin-top: 16px;
+    margin-bottom: 48px;
+  }
+
+  .contact-links {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    max-width: 520px;
+  }
+
+  .contact-link {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 18px 20px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    text-decoration: none;
+    transition: border-color 0.2s, background 0.2s, transform 0.2s;
+  }
+  .contact-link:hover {
+    border-color: var(--accent);
+    background: var(--surface-hover, rgba(91, 141, 246, 0.04));
+    transform: translateX(4px);
+  }
+  .contact-link:hover .contact-icon { color: var(--accent); }
+  .contact-link:hover .contact-arrow { opacity: 1; color: var(--accent); }
+
+  .contact-icon {
+    color: var(--muted);
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
     transition: color 0.2s;
   }
-  .email-link:hover { color: var(--text); }
+
+  .contact-text {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    flex: 1;
+  }
+
+  .contact-label {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .contact-value {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text);
+  }
+
+  .contact-arrow {
+    color: var(--muted);
+    opacity: 0.4;
+    flex-shrink: 0;
+    transition: opacity 0.2s, color 0.2s;
+  }
 
   .site-footer {
     border-top: 1px solid var(--border);

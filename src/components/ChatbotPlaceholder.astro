@@ -3,7 +3,7 @@
 // İçerik sonra kullanıcı tarafından doldurulacak. Şu an "yakında" mesajı veriyor.
 ---
 
-<div class="chatbot-fab" id="chatbot-fab" role="button" tabindex="0" aria-label="AI eşliğinde sohbet et">
+<div class="chatbot-fab" id="chatbot-fab" role="button" tabindex="0" aria-label="Chat with AI">
   <button class="fab-btn" aria-haspopup="dialog" aria-controls="chatbot-window" id="fab-btn">
     <svg
       width="22"
@@ -25,9 +25,9 @@
     <div class="cw-head">
       <div>
         <div class="cw-title" id="chatbot-title">AI Twin <span class="cw-badge">soon</span></div>
-        <div class="cw-subtitle">RAG destekli kişisel asistanım</div>
+        <div class="cw-subtitle">My RAG-powered personal assistant</div>
       </div>
-      <button class="cw-close" aria-label="Kapat" id="cw-close">
+      <button class="cw-close" aria-label="Close" id="cw-close">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <line x1="18" y1="6" x2="6" y2="18"></line>
           <line x1="6" y1="6" x2="18" y2="18"></line>
@@ -37,23 +37,22 @@
 
     <div class="cw-body">
       <div class="cw-bubble cw-bubble--bot">
-        Merhaba — şu an inşa aşamasındayım. Yakında CV'm ve projelerim hakkında
-        sorularınıza buradan cevap vereceğim. Şimdilik
-        <a href="mailto:gorkenvm@gmail.com">e-posta</a> ya da
+        Hey — I'm still being built. Soon I'll answer questions about my CV and projects right here. For now,
+        <a href="mailto:gorkenvm@gmail.com">email</a> or
         <a href="https://linkedin.com/in/vmgorken" target="_blank" rel="noopener">LinkedIn</a>
-        en hızlı yol.
+        is the fastest way to reach me.
       </div>
 
       <div class="cw-suggestions">
-        <button class="cw-chip" disabled>"Whisper LoRA detayını anlat"</button>
-        <button class="cw-chip" disabled>"Almanca seviyem nedir?"</button>
-        <button class="cw-chip" disabled>"En sevdiğin proje?"</button>
+        <button class="cw-chip" disabled>"Tell me about the Whisper LoRA project"</button>
+        <button class="cw-chip" disabled>"What's your German level?"</button>
+        <button class="cw-chip" disabled>"Favorite project?"</button>
       </div>
     </div>
 
     <div class="cw-foot">
-      <input type="text" placeholder="Sohbet henüz aktif değil…" disabled />
-      <button disabled aria-label="Gönder">
+      <input type="text" placeholder="Chat not yet active…" disabled />
+      <button disabled aria-label="Send">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <line x1="22" y1="2" x2="11" y2="13"></line>
           <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>

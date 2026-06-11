@@ -21,14 +21,6 @@ jobs:
       - name: Build al (GitHub Actions üzerinde)
         run: npm ci && npm run build
 
-      - name: VPS kaynak kodunu güncelle
-        uses: appleboy/ssh-action@v1.0.3
-        with:
-          host: ${{ secrets.VPS_HOST }}
-          username: vmg
-          key: ${{ secrets.VPS_SSH_KEY }}
-          script: cd /home/vmg/www/vmgorken-site && git pull origin main
-
       - name: dist/ klasörünü VPS'e kopyala
         uses: appleboy/scp-action@v0.1.7
         with:

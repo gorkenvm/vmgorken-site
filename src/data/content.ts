@@ -1,34 +1,26 @@
-// ============================================================================
-// SİTE İÇERİĞİ — Tek dosyadan yönetim
-// ============================================================================
-// İleride EN/DE çevirisi için:
-//   - Bu dosyayı content.tr.ts olarak yeniden adlandır
-//   - content.en.ts ve content.de.ts oluştur
-//   - astro.config.mjs içindeki i18n bloğunu aç
-// ============================================================================
-
 export const site = {
   name: "Veysel Murat Gorken",
   shortName: "VMG",
   title: "Veysel Murat Gorken — AI Engineer",
   description:
-    "AI Engineer. 5M+ kullanıcıya dokunan üretim ML & GenAI sistemleri. Dortmund, Almanya — Avrupa geneli için açığım.",
-  url: "https://vmgorken.dev",
+    "AI Engineer. Production ML & GenAI systems serving 5M+ users. Dortmund, Germany — open to relocation within Germany.",
+  url: "https://vmgorken.com",
   email: "gorkenvm@gmail.com",
   phone: "+49 151 253 20930",
-  location: "Dortmund, Almanya",
-  locationFull: "Dortmund, Almanya · Avrupa geneline açık",
+  location: "Dortmund, Germany",
+  locationFull: "Dortmund, Germany · Open to relocation within Germany",
   linkedin: "https://linkedin.com/in/vmgorken",
   github: "https://github.com/gorkenvm",
-  cvUrl: "/cv/VMGorken_CV.pdf",
+  cvUrlEN: "/cv/VMGorken_CV_EN.pdf",
+  cvUrlDE: "/cv/VMGorken_CV_DE.pdf",
 };
 
 export const hero = {
   tag: "AI Engineer · GenAI & MLOps",
   name: "Veysel Murat",
   surname: "Gorken",
-  title: "Üretim ortamında çalışan AI sistemleri kuruyorum.",
-  bio: "Şehir ölçeğinde ML ve LLM hatları tasarladım — ulaşım, finans ve kamu hizmetlerinde 5M+ vatandaşa dokundu. Şu an Dortmund'dayım, Almanya ve Avrupa geneli için açığım.",
+  title: "I build AI systems that run in production.",
+  bio: "I've designed city-scale ML and LLM pipelines — touching 5M+ citizens across transportation, finance, and public services. Currently in Dortmund, open to Germany and across Europe.",
   chips: [
     "Python",
     "LLM / RAG",
@@ -40,142 +32,115 @@ export const hero = {
     "PostgreSQL",
   ],
   ctas: {
-    primary: { label: "İletişime Geç", href: "#contact" },
-    secondary: { label: "CV İndir (PDF)", href: "/cv/VMGorken_CV.pdf" },
-    tertiary: { label: "GitHub", href: "https://github.com/gorkenvm" },
+    cvEN: { label: "Download CV (EN)", href: "/cv/VMGorken_CV_EN.pdf" },
+    cvDE: { label: "Download CV (DE)", href: "/cv/VMGorken_CV_DE.pdf" },
   },
 };
 
-// Animated counters için sayısal vurgular
 export const metrics = [
   {
     value: 5,
     suffix: "M+",
-    label: "Vatandaşa dokunan sistemler",
-    detail: "Ulaşım, finans, kamu hizmetleri — İzmir BB altyapısı",
+    label: "Citizens reached",
+    detail: "Transport, finance, public services — İzmir Metropolitan infrastructure",
   },
   {
     value: 93,
     suffix: "%",
-    label: "F1 skoru",
+    label: "F1 score",
     detail: "Hybrid ML + LLM Agent pipeline (LightGBM + RAG + BERT)",
   },
   {
     value: 10,
     suffix: "×",
-    label: "Birim işleme kapasitesi",
-    detail: "Manuel iş gücüne kıyasla artış",
+    label: "Processing capacity",
+    detail: "Individual throughput increase vs. manual workforce",
   },
   {
     value: 3.65,
     suffix: "%",
-    label: "WER düşüşü",
+    label: "WER reduction",
     decimals: 2,
-    detail: "Whisper Large v3 Turbo · LoRA fine-tune · Türkçe ASR",
+    detail: "Whisper Large v3 Turbo · LoRA fine-tune · Turkish ASR",
   },
   {
     value: 40,
     suffix: "%",
-    label: "Manuel denetim süresi azaldı",
-    detail: "500+ Oracle tablosu için NL→SQL hattı",
+    label: "Manual audit time reduced",
+    detail: "NL→SQL pipeline for 500+ Oracle tables",
   },
   {
     value: 4,
-    suffix: "+ yıl",
-    label: "Üretim AI deneyimi",
-    detail: "Veri Bilimi → AI Engineering",
+    suffix: "+ yrs",
+    label: "Production AI experience",
+    detail: "Data Science → AI Engineering",
   },
 ];
 
-// İş tecrübesi / eğitim — timeline panel
 export const timeline = [
   {
-    date: "2026 — devam",
-    role: "Aktif İş Arayışı",
-    org: "Dortmund, Almanya · taşınmaya açık",
+    date: "2026 — present",
+    role: "Active Job Search",
+    org: "Dortmund, Germany · open to relocation within Germany",
     type: "now",
   },
   {
     date: "2022 — 2025",
-    role: "Veri Bilimci (AI Engineer)",
+    role: "Data Scientist (AI Engineer)",
     org: "İzmir İnovasyon ve Teknoloji A.Ş.",
     type: "work",
     highlights: [
-      "Hybrid ML + LLM Agent hattı — 93% F1",
-      "Whisper LoRA fine-tune — Türkçe ASR'da 3.65% WER düşüşü",
-      "Şehir ölçeğinde 5M+ kullanıcıya hizmet eden Big Data altyapısı",
+      "Hybrid ML + LLM Agent pipeline — 93% F1",
+      "Whisper LoRA fine-tune — 3.65% WER reduction on Turkish ASR",
+      "City-scale Big Data infrastructure serving 5M+ users",
     ],
   },
   {
     date: "2022 — 2024",
-    role: "Veri Bilimi Mentörü",
-    org: "Miuul · Uzaktan",
+    role: "Data Science Mentor",
+    org: "Miuul · Remote",
     type: "work",
   },
   {
     date: "2021 — 2022",
-    role: "Python Eğitmeni",
-    org: "Kodland · Uzaktan",
+    role: "Python Instructor",
+    org: "Kodland · Remote",
     type: "work",
   },
   {
     date: "2017 — 2019",
-    role: "M.Sc. Mühendislik Yönetimi",
-    org: "İstanbul Medeniyet Üniversitesi",
+    role: "M.Sc. Engineering Management",
+    org: "Istanbul Medeniyet University",
     type: "edu",
   },
   {
     date: "2015 — 2016",
-    role: "Erasmus Değişim",
-    org: "University of Pécs, Macaristan",
+    role: "Erasmus Exchange",
+    org: "University of Pécs, Hungary",
     type: "edu",
   },
   {
     date: "2011 — 2016",
-    role: "B.Sc. Biyomedikal Mühendisliği",
-    org: "Işık Üniversitesi, İstanbul",
+    role: "B.Sc. Biomedical Engineering",
+    org: "Işık University, Istanbul",
     type: "edu",
   },
 ];
 
-// Featured projects
-export const projects = [
-  {
-    slug: "project-1",
-    name: "Proje 1",
-    tagline: "Yakında",
-    description: "Bu proje yakında eklenecek.",
-    stack: [],
-    impact: "",
-    github: "https://github.com/gorkenvm",
-    accent: "blue",
-  },
-  {
-    slug: "project-2",
-    name: "Proje 2",
-    tagline: "Yakında",
-    description: "Bu proje yakında eklenecek.",
-    stack: [],
-    impact: "",
-    github: "https://github.com/gorkenvm",
-    accent: "purple",
-  },
-  {
-    slug: "project-3",
-    name: "Proje 3",
-    tagline: "Yakında",
-    description: "Bu proje yakında eklenecek.",
-    stack: [],
-    impact: "",
-    github: "https://github.com/gorkenvm",
-    accent: "green",
-  },
-];
+export const projects: {
+  slug: string;
+  name: string;
+  tagline: string;
+  description: string;
+  stack: string[];
+  impact: string;
+  github: string;
+  accent: string;
+}[] = [];
 
-// Skills — kategoriler
 export const skillGroups = [
   {
-    title: "Üretken AI & LLM",
+    title: "Generative AI & LLMs",
     items: [
       "LangChain",
       "LangGraph",
@@ -189,7 +154,7 @@ export const skillGroups = [
     ],
   },
   {
-    title: "Makine & Derin Öğrenme",
+    title: "Machine & Deep Learning",
     items: [
       "PyTorch",
       "TensorFlow",
@@ -201,7 +166,7 @@ export const skillGroups = [
     ],
   },
   {
-    title: "MLOps & Deploy",
+    title: "MLOps & Deployment",
     items: [
       "Docker",
       "MLflow",
@@ -222,9 +187,9 @@ export const skillGroups = [
     ],
   },
   {
-    title: "Diller & Veritabanları",
+    title: "Languages & Databases",
     items: [
-      "Python (ileri)",
+      "Python (Advanced)",
       "SQL — PostgreSQL · Oracle · MS SQL · BigQuery",
       "MongoDB",
       "Bash",
@@ -237,18 +202,17 @@ export const skillGroups = [
 ];
 
 export const languages = [
-  { name: "Türkçe", level: "Anadil", percent: 100 },
-  { name: "İngilizce", level: "Akıcı (B2)", percent: 75 },
-  { name: "Almanca", level: "Orta (B1 — aktif geliştiriyor)", percent: 55 },
+  { name: "Turkish", level: "Native", percent: 100 },
+  { name: "English", level: "Fluent (C1)", percent: 80 },
+  { name: "German", level: "Intermediate (B1 — actively improving)", percent: 55 },
 ];
 
-// Mock JobTracker data — projede gömülü mini demo için
 export const jobTrackerMock = [
   {
     company: "Mercedes-Benz Tech Innovation",
     role: "Senior AI Engineer",
     location: "Stuttgart",
-    status: "Mülakat",
+    status: "Interview",
     applied: "2026-05-02",
     statusColor: "blue",
   },
@@ -256,7 +220,7 @@ export const jobTrackerMock = [
     company: "SAP",
     role: "ML Engineer — Generative AI",
     location: "Walldorf",
-    status: "Teknik Görev",
+    status: "Technical Task",
     applied: "2026-04-28",
     statusColor: "purple",
   },
@@ -264,7 +228,7 @@ export const jobTrackerMock = [
     company: "Bosch",
     role: "AI / MLOps Engineer",
     location: "Berlin",
-    status: "Başvuruldu",
+    status: "Applied",
     applied: "2026-05-10",
     statusColor: "gray",
   },
@@ -272,15 +236,15 @@ export const jobTrackerMock = [
     company: "DeepL",
     role: "Research Engineer, LLM",
     location: "Köln",
-    status: "Olumlu Geri Bildirim",
+    status: "Positive Feedback",
     applied: "2026-04-15",
     statusColor: "green",
   },
   {
     company: "Helsing",
     role: "Senior ML Engineer",
-    location: "Münih",
-    status: "Beklemede",
+    location: "München",
+    status: "Pending",
     applied: "2026-05-05",
     statusColor: "yellow",
   },
@@ -288,20 +252,19 @@ export const jobTrackerMock = [
     company: "Aleph Alpha",
     role: "AI Engineer — Foundation Models",
     location: "Heidelberg",
-    status: "Mülakat",
+    status: "Interview",
     applied: "2026-04-22",
     statusColor: "blue",
   },
 ];
 
 export const contact = {
-  title: "Beraber çalışalım mı?",
+  title: "Let's work together",
   subtitle:
-    "Üretim AI sistemleri, GenAI hatları ya da MLOps mimarisi için bir pozisyonunuz varsa — sohbet edelim.",
+    "If you have a position in production AI systems, GenAI pipelines, or MLOps architecture — let's talk.",
   ctas: [
     { label: "gorkenvm@gmail.com", href: "mailto:gorkenvm@gmail.com", icon: "mail" },
     { label: "linkedin.com/in/vmgorken", href: "https://linkedin.com/in/vmgorken", icon: "linkedin" },
     { label: "github.com/gorkenvm", href: "https://github.com/gorkenvm", icon: "github" },
-    { label: "+49 151 253 20930", href: "tel:+4915125320930", icon: "phone" },
   ],
 };
