@@ -21,6 +21,7 @@ import { timeline } from "../data/content";
     >
       <polyline points="9 18 15 12 9 6"></polyline>
     </svg>
+    <span class="toggle-label">Timeline</span>
   </button>
 
   <div class="panel-inner">
@@ -46,6 +47,17 @@ import { timeline } from "../data/content";
   </div>
 </aside>
 
+<script>
+  // Kapalıyken şeridin herhangi bir yerine tıklamak paneli açar
+  const panel = document.getElementById("timeline-panel");
+  panel?.addEventListener("click", (e) => {
+    const target = e.target as HTMLElement;
+    if (!panel.classList.contains("open") && !target.closest(".toggle-btn")) {
+      panel.classList.add("open");
+    }
+  });
+</script>
+
 <style>
   .panel {
     position: sticky;
@@ -66,15 +78,22 @@ import { timeline } from "../data/content";
     width: var(--panel-w);
   }
 
+  .panel:not(.open) {
+    border-right: 1px solid var(--accent);
+    box-shadow: 0 0 18px var(--accent-dim);
+    cursor: pointer;
+  }
+
   .toggle-btn {
     position: absolute;
     top: 24px;
     right: 0;
     width: var(--toggle-w);
-    height: 48px;
+    padding: 12px 0;
     display: flex;
+    flex-direction: column;
     align-items: center;
-    justify-content: center;
+    gap: 14px;
     color: var(--accent);
     z-index: 10;
     transition: color 0.2s;
@@ -82,9 +101,32 @@ import { timeline } from "../data/content";
   .toggle-btn:hover { color: #fff; }
 
   .toggle-btn svg {
+    width: 22px;
+    height: 22px;
     transition: transform 0.4s var(--ease);
+    animation: nudge 1.8s ease-in-out infinite;
   }
-  .panel.open .toggle-btn svg { transform: rotate(180deg); }
+  .panel.open .toggle-btn svg {
+    transform: rotate(180deg);
+    animation: none;
+  }
+
+  .toggle-label {
+    writing-mode: vertical-rl;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+  }
+  .panel.open .toggle-label { display: none; }
+
+  @keyframes nudge {
+    0%, 100% { transform: translateX(0); }
+    50% { transform: translateX(4px); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .toggle-btn svg { animation: none; }
+  }
 
   .panel-inner {
     width: var(--panel-w);
@@ -213,11 +255,21 @@ import { timeline } from "../data/content";
       transition: max-height 0.4s var(--ease);
     }
     .panel.open { max-height: 70vh; }
+    .panel:not(.open) {
+      border-right: none;
+      border-top: 1px solid var(--accent);
+    }
     .toggle-btn {
       top: 6px;
       right: 50%;
       transform: translateX(50%);
+      width: auto;
+      padding: 4px 12px;
+      flex-direction: row;
+      gap: 8px;
     }
+    .toggle-label { writing-mode: horizontal-tb; }
+    .toggle-btn svg { animation: none; }
     .panel.open .toggle-btn svg { transform: rotate(-90deg); }
     .toggle-btn svg { transform: rotate(90deg); }
     .panel-inner {

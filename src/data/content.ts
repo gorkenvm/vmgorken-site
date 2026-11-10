@@ -3,14 +3,17 @@ export const site = {
   shortName: "VMG",
   title: "Veysel Murat Gorken — AI Engineer",
   description:
-    "AI Engineer. Production ML & GenAI systems serving 5M+ users. Dortmund, Germany — open to relocation within Germany.",
+    "AI Engineer. Production ML & GenAI systems serving 5M+ users. Ankara, Turkey.",
   url: "https://vmgorken.com",
   email: "gorkenvm@gmail.com",
-  phone: "+49 151 253 20930",
-  location: "Dortmund, Germany",
-  locationFull: "Dortmund, Germany · Open to relocation within Germany",
+  phone: "0544 210 72 72",
+  location: "Ankara, Turkey",
+  locationFull: "Çankaya, Ankara, Turkey",
   linkedin: "https://linkedin.com/in/vmgorken",
   github: "https://github.com/gorkenvm",
+  // Cloudflare Web Analytics site token (dashboard → Web Analytics → JS snippet).
+  // Public bir değer; boş bırakılırsa analytics script'i eklenmez.
+  cfAnalyticsToken: "",
 };
 
 export const hero = {
@@ -18,7 +21,7 @@ export const hero = {
   name: "Veysel Murat",
   surname: "Gorken",
   title: "I build AI systems that run in production.",
-  bio: "I've designed city-scale ML and LLM pipelines — touching 5M+ citizens across transportation, finance, and public services. Currently in Dortmund, open to Germany and across Europe.",
+  bio: "I've designed city-scale ML and LLM pipelines — touching 5M+ citizens across transportation, finance, and public services. Based in Ankara, Turkey.",
   chips: [
     "Python",
     "LLM / RAG",
@@ -64,7 +67,7 @@ export const metrics = [
     detail: "NL→SQL pipeline for 500+ Oracle tables",
   },
   {
-    value: 4,
+    value: 5,
     suffix: "+ yrs",
     label: "Production AI experience",
     detail: "Data Science → AI Engineering",
@@ -75,22 +78,26 @@ export const timeline = [
   {
     date: "2026 — present",
     role: "Active Job Search",
-    org: "Dortmund, Germany · open to relocation within Germany",
+    org: "Ankara, Turkey",
     type: "now",
   },
   {
-    date: "2022 — 2025",
-    role: "Data Scientist (AI Engineer)",
-    org: "İzmir İnovasyon ve Teknoloji A.Ş.",
-    type: "work",
+    date: "Jun 2026 — present",
+    role: "Senior AI Engineer",
+    org: "Climate Accountability API · Berlin, Germany (Remote)",
+    type: "now",
     highlights: [
-      "Hybrid ML + LLM Agent pipeline — 93% F1",
-      "Whisper LoRA fine-tune — 3.65% WER reduction on Turkish ASR",
-      "City-scale Big Data infrastructure serving 5M+ users",
+      "OCR + LLM extraction of ESG metrics with quote-level evidence validation",
     ],
   },
   {
-    date: "2022 — 2024",
+    date: "Jun 2022 — Dec 2025",
+    role: "Data Scientist",
+    org: "İzmir İnovasyon ve Teknoloji A.Ş. · İzmir, Turkey",
+    type: "work",
+  },
+  {
+    date: "2022 — 2025",
     role: "Data Science Mentor",
     org: "Miuul · Remote",
     type: "work",
@@ -102,15 +109,15 @@ export const timeline = [
     type: "work",
   },
   {
+    date: "2018 — 2020",
+    role: "R&D Consultant",
+    org: "Universal Ar-Ge ve İnovasyon Hizmetleri A.Ş.",
+    type: "work",
+  },
+  {
     date: "2017 — 2019",
     role: "M.Sc. Engineering Management",
     org: "Istanbul Medeniyet University",
-    type: "edu",
-  },
-  {
-    date: "2015 — 2016",
-    role: "Erasmus Exchange",
-    org: "University of Pécs, Hungary",
     type: "edu",
   },
   {
@@ -118,6 +125,7 @@ export const timeline = [
     role: "B.Sc. Biomedical Engineering",
     org: "Işık University, Istanbul",
     type: "edu",
+    highlights: ["Focus: Medical image processing"],
   },
 ];
 

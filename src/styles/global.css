@@ -37,7 +37,7 @@
   --font-mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace;
 
   /* Geometri */
-  --panel-w: 320px;
+  --panel-w: 400px;
   --toggle-w: 48px;
   --radius-sm: 4px;
   --radius-md: 8px;

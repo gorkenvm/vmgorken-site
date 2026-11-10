@@ -26,3 +26,6 @@ pnpm-debug.log*
 
 # legacy backup
 legacy/
+
+# CV / kişisel dokümanlar (repoya girmez)
+cv/
