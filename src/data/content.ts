@@ -11,9 +11,6 @@ export const site = {
   locationFull: "Çankaya, Ankara, Turkey",
   linkedin: "https://linkedin.com/in/vmgorken",
   github: "https://github.com/gorkenvm",
-  // Cloudflare Web Analytics site token (dashboard → Web Analytics → JS snippet).
-  // Public bir değer; boş bırakılırsa analytics script'i eklenmez.
-  cfAnalyticsToken: "",
 };
 
 export const hero = {

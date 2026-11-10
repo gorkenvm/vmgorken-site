@@ -72,17 +72,6 @@ const { title = site.title, description = site.description } = Astro.props;
         items.forEach((el) => io.observe(el));
       })();
     </script>
-
-    <!-- Cloudflare Web Analytics (çerezsiz). Token boşsa script eklenmez. -->
-    {
-      site.cfAnalyticsToken && (
-        <script
-          is:inline
-          defer
-          src="https://static.cloudflareinsights.com/beacon.min.js"
-          data-cf-beacon={JSON.stringify({ token: site.cfAnalyticsToken })}
-        />
-      )
-    }
+    <!-- Analytics: Cloudflare Web Analytics "automatic setup" ile edge'de enjekte ediliyor; buraya script ekleme (çift sayım olur). -->
   </body>
 </html>
